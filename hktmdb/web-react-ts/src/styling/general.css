@@ -1,0 +1,46 @@
+/*Hele containeren*/
+#grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    grid-column-gap: 50px;
+    grid-row-gap: 50px;
+    padding: 10px;
+  }
+
+
+/*Generell styling av hvert item i grid*/
+ #grid-container > * {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+
+
+  #mobxExample {
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  #input {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start:2;
+    grid-row-end:3;
+  }
+
+
+h1{
+    font-size: 25px;
+}
+h2{
+    font-size: 20px;
+}
+h3{
+    font-size: 15px;
+}
+p{
+    font-size: 12px;
+}

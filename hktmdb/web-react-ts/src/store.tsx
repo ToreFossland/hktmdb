@@ -1,7 +1,3 @@
-
-
-
-
 export function createStore() {
     return {
         data: [] as string[],
