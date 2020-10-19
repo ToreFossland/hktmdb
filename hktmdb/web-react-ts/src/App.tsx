@@ -1,7 +1,7 @@
 import React from 'react'
-import Test from './components/Test';
 import MobxExample from './components/MobxExample';
-import Input from './components/Input';
+import Search from './components/Search';
+import SearchResults from './components/SearchResults';
 import {useLocalStore, useObserver} from "mobx-react";
 import { DataStoreProvider } from './context'
 import './styling/general.css';
@@ -37,8 +37,8 @@ class App extends React.Component<myProps, myState> {
           <DataStoreProvider>
             <MobxExample/>
           </DataStoreProvider>
-        <Test input={this.state.input} />
-        <Input onChange={this.changeInput} />
+        <Search onChange={this.changeInput}/>
+        <SearchResults input={this.state.input}/>
         <div></div>
         <div></div>
         <div></div>

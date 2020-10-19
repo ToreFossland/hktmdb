@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Input = ({...props}) => {
+const Search = ({...props}) => {
 
     const handleChange = (event: any) => {
         var value = event.target.value;
@@ -11,11 +11,14 @@ const Input = ({...props}) => {
         props.onChange(value);
     }
     return (
-        <form id="input">
-            <input type="text" onChange ={handleChange}/>
-        </form>
+        <div>
+            <form>
+                <h3> Search for a movie: </h3>
+                <input type="text" onChange={handleChange}/>
+            </form>
+        </div>
     );
 }
 
 
-export default Input;
+export default Search;
