@@ -2,6 +2,7 @@ import React from 'react'
 import MobxExample from './components/MobxExample';
 import Search from './components/Search';
 import SearchResults from './components/SearchResults';
+import AddMovie from './components/AddMovie';
 import {useLocalStore, useObserver} from "mobx-react";
 import { DataStoreProvider } from './context'
 import './styling/general.css';
@@ -22,7 +23,7 @@ class App extends React.Component<myProps, myState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      input: "."
+      input: ".",
     }
     this.changeInput = this.changeInput.bind(this);
   }
@@ -39,6 +40,7 @@ class App extends React.Component<myProps, myState> {
           </DataStoreProvider>
         <Search onChange={this.changeInput}/>
         <SearchResults input={this.state.input}/>
+        <AddMovie />
         <div></div>
         <div></div>
         <div></div>

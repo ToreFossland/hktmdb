@@ -1,12 +1,17 @@
 import { gql, useQuery } from '@apollo/client';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import '../index.css';
 
 
 
 const SearchResults = ({...props}) => {
+    const [movieCount, setMovieCount] = useState(0);
 
-    var input = function capitalizeFirstLetters(input: string) {
+    useEffect(() => {
+        setMovieCount(0);
+    }, [props.input])
+
+    var capitalizeFirstLetters = function(input: string) {
         var splitStr = input.toLowerCase().split(' ');
         for (var i = 0; i < splitStr.length; i++) {
             splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
@@ -16,7 +21,7 @@ const SearchResults = ({...props}) => {
 
     const GET_MOVIES = gql`
     {
-        Movie(filter: {title_contains: "${input(props.input)}"}) {
+        Movie(first:5 offset: ${movieCount}, filter: {title_contains: "${capitalizeFirstLetters(props.input)}"}) {
             title
         }
     }
@@ -24,7 +29,7 @@ const SearchResults = ({...props}) => {
 
     const { loading, error, data } = useQuery(GET_MOVIES)
     if (error) return <p>Error</p>
-    if (loading) return <p>Loading</p>
+    if (loading) return <p>Fetching movies...</p>
 
     const movies = data.Movie.map((movie: any) => movie)
     
@@ -32,9 +37,19 @@ const SearchResults = ({...props}) => {
     for(var i=0; i < movies.length; i++) {
         moviedivs[i] = <p>{movies[i].title}</p>
     }
+
+
+    var moreResults = function() {
+        if(moviedivs.length >= 5) {
+            return <button onClick={() => setMovieCount(movieCount+5)}>Show more</button>
+        }
+    }
+
+
     return (
         <div>
             <div className="moviediv">{moviedivs}</div>
+            {moreResults()}
         </div>
     );
 }
