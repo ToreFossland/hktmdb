@@ -10,3 +10,8 @@ type Person {
   name: String
   born: Int
 }
+
+type SearchHistory {
+  query: String
+  date: String
+}

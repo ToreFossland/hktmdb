@@ -1,8 +1,10 @@
 import React from 'react';
+import { gql, useQuery } from '@apollo/client';
+
 
 
 const Search = ({...props}) => {
-
+    
     const handleChange = (event: any) => {
         var value = event.target.value;
         if (value === "") {
