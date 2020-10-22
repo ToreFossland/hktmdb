@@ -1,11 +1,26 @@
 import { gql, useQuery } from '@apollo/client';
 import React, { ChangeEvent, useState } from 'react';
 import { useDataStore } from "../context";
-import { observer } from 'mobx-react-lite';
+import { useObserver } from 'mobx-react-lite';
+
+
+const Test = () => {
+    const store = useDataStore();
+    return useObserver(() => (
+        <ul>
+        {store.data.map((value:string) => (
+            <li>
+                <span>{value}</span>
+                <button onClick={() => store.removeData(value)}>Remove data</button>
+            </li>
+            ))}
+        </ul>
+    ))
+}
 
 
 
-const MobxExample = ({ ...props }) => {
+const MovieInput = ({ ...props }) => {
     const [query, setQuery] = useState<string>("");
 
     const store = useDataStore();
@@ -15,24 +30,20 @@ const MobxExample = ({ ...props }) => {
         setQuery(e.target.value);
     };
 
-
     return (
-
-    <div id="mobxExample">
-    <div>
-        <input type="text" value={query} onChange={handleChange} />
-        <button onClick={() => store.addData(query)}>Add data</button>
-    </div>
-        <ul>
-            {store.data.map((value:string) => (
-                <li>
-                    <span>{value}</span>
-                    <button onClick={() => store.removeData(value)}>Remove data</button>
-                </li>
-                ))}
-        </ul>
-    </div>
+        <div>
+            <input type="text" value={query} onChange={handleChange} />
+            <button onClick={() => store.addData(query)}>Add data</button>
+        </div>
     )
 }
 
-export default MobxExample;
+
+export default function MobxExample() {
+    return (
+        <div>
+            <MovieInput/>
+            <Test/>
+        </div>
+    );
+  }

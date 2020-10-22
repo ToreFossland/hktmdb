@@ -1,18 +1,19 @@
 import { gql, useQuery } from '@apollo/client';
 import React, {useEffect, useState} from 'react';
+import { useDataStore } from "../context";
 import '../index.css';
 
 
 
 const SearchResults = ({...props}) => {
     const [movieCount, setMovieCount] = useState(0);
-    const [movieId, setMovieId] = useState("");
+    const store = useDataStore();
 
     useEffect(() => {
         setMovieCount(0);
     }, [props.input, props.firstYear, props.secondYear, props.filterType])
 
-    var capitalizeFirstLetters = function(input: string) {
+    const capitalizeFirstLetters = (input: string) => {
         var splitStr = input.toLowerCase().split(' ');
         for (var i = 0; i < splitStr.length; i++) {
             splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
@@ -42,10 +43,10 @@ const SearchResults = ({...props}) => {
     }
 
     function showDetails(event: any) {
-        setMovieId(movies[event.target.value]._id)
-        console.log(movieId);
+        store.addData(movies[event.target.value]._id)
     }
 
+    
     var moreResults = function() {
         if(moviedivs.length >= 5) {
             return <button onClick={() => setMovieCount(movieCount+5)}>Show more</button>

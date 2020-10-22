@@ -62,6 +62,7 @@ class App extends React.Component<myProps, myState> {
 
   render() {
     return (
+      <DataStoreProvider>
       <div id="grid-container">
         
         <Login/>
@@ -73,10 +74,11 @@ class App extends React.Component<myProps, myState> {
           <SearchYear onChange1={this.changeFirstYear} onChange2={this.changeSecondYear} /><br></br>
           <SearchType onChange={this.changeFilterType}/>
         </div>
-
+        <MobxExample/>
         
         <div></div>
       </div>
+      </DataStoreProvider>
     )
   }
 
