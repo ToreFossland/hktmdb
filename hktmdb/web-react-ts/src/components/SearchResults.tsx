@@ -6,6 +6,7 @@ import '../index.css';
 
 const SearchResults = ({...props}) => {
     const [movieCount, setMovieCount] = useState(0);
+    const [movieId, setMovieId] = useState("");
 
     useEffect(() => {
         setMovieCount(0);
@@ -22,8 +23,9 @@ const SearchResults = ({...props}) => {
     const GET_MOVIES = gql`
     {
         Movie(first:5 offset: ${movieCount}, filter: {title_contains: "${capitalizeFirstLetters(props.input)}"}) {
+            _id
             title
-
+            released
         }
     }
 `;
@@ -36,9 +38,13 @@ const SearchResults = ({...props}) => {
     
     const moviedivs = []
     for(var i=0; i < movies.length; i++) {
-        moviedivs[i] = <p>{movies[i].title}</p>
+        moviedivs[i] = <li value={i} onClick={(event) => showDetails(event)}>{movies[i].title}({movies[i].released}) </li>
     }
 
+    function showDetails(event: any) {
+        setMovieId(movies[event.target.value]._id)
+        console.log(movieId);
+    }
 
     var moreResults = function() {
         if(moviedivs.length >= 5) {
@@ -49,7 +55,7 @@ const SearchResults = ({...props}) => {
 
     return (
         <div>
-            <div className="moviediv">{moviedivs}</div>
+            <ul className="moviediv">{moviedivs}</ul>
             {moreResults()}
         </div>
     );
