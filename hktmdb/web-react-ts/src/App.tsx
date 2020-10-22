@@ -38,15 +38,17 @@ class App extends React.Component<myProps, myState> {
 
   render() {
     return (
-      <div id="grid-container">
-        
-        <Login/>
-        <LogOut/>
-        <SearchHistory/>
-        <SearchResults input={this.state.input}/>
-        <Search onChange={this.changeInput}/>
-        <div></div>
-      </div>
+      <DataStoreProvider>
+        <div id="grid-container">
+          
+          <Login/>
+          <LogOut/>
+          <SearchHistory/>
+          <SearchResults input={this.state.input}/>
+          <Search onChange={this.changeInput}/>
+          <MobxExample/>
+        </div>
+      </DataStoreProvider>
     )
   }
 

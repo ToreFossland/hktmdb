@@ -1,4 +1,4 @@
-import { useLocalObservable} from 'mobx-react-lite';
+import { useLocalStore } from 'mobx-react-lite';
 //useLocalStore is deprecated and replaced by useLocalObservable
 import React from 'react';
 import { createStore, TStore } from "./store";
@@ -9,7 +9,7 @@ const StoreContext = React.createContext<TStore | null>(null);
 
 export const DataStoreProvider = ({ children }: any) => {
     //Vi gjør store observable
-    const store = useLocalObservable(createStore);
+    const store = useLocalStore(createStore);
     return <StoreContext.Provider value={store}> {children} </StoreContext.Provider>;
 };
 
