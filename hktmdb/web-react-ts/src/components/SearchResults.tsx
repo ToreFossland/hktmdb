@@ -1,12 +1,13 @@
 import { gql, useQuery } from '@apollo/client';
 import React, {useEffect, useState} from 'react';
+import { useDataStore } from "../context";
 import '../index.css';
 
 
 
 const SearchResults = ({...props}) => {
     const [movieCount, setMovieCount] = useState(0);
-    const [movieId, setMovieId] = useState("");
+    const store = useDataStore();
 
     useEffect(() => {
         setMovieCount(0);
@@ -42,8 +43,7 @@ const SearchResults = ({...props}) => {
     }
 
     function showDetails(event: any) {
-        setMovieId(movies[event.target.value]._id)
-        console.log(movieId);
+        store.addData(movies[event.target.value]._id)
     }
 
     var moreResults = function() {
