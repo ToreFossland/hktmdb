@@ -19,7 +19,6 @@ const Test = () => {
 }
 
 
-
 const MovieInput = ({ ...props }) => {
     const [query, setQuery] = useState<string>("");
 
@@ -39,7 +38,7 @@ const MovieInput = ({ ...props }) => {
 }
 
 
-export default function MobxExample() {
+const MobxExample= () => {
     return (
         <div>
             <MovieInput/>
@@ -47,3 +46,5 @@ export default function MobxExample() {
         </div>
     );
   }
+
+  export default MobxExample;
