@@ -23,6 +23,7 @@ const SearchResults = ({...props}) => {
     {
         Movie(first:5 offset: ${movieCount}, filter: {title_contains: "${capitalizeFirstLetters(props.input)}"}) {
             title
+
         }
     }
 `;

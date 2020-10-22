@@ -43,8 +43,8 @@ class App extends React.Component<myProps, myState> {
         <Login/>
         <LogOut/>
         <SearchHistory/>
-        <SearchResults/>
-        <Search/>
+        <SearchResults input={this.state.input}/>
+        <Search onChange={this.changeInput}/>
         <div></div>
       </div>
     )
