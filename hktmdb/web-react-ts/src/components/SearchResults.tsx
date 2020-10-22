@@ -10,7 +10,7 @@ const SearchResults = ({...props}) => {
 
     useEffect(() => {
         setMovieCount(0);
-    }, [props.input])
+    }, [props.input, props.firstYear, props.secondYear, props.filterType])
 
     var capitalizeFirstLetters = function(input: string) {
         var splitStr = input.toLowerCase().split(' ');
@@ -22,7 +22,7 @@ const SearchResults = ({...props}) => {
 
     const GET_MOVIES = gql`
     {
-        Movie(first:5 offset: ${movieCount}, filter: {title_contains: "${capitalizeFirstLetters(props.input)}"}) {
+        Movie(first:5 offset: ${movieCount}, orderBy: ${props.filterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(props.input)}", released_gte: ${props.firstYear}, released_lte: ${props.secondYear}}) {
             _id
             title
             released
