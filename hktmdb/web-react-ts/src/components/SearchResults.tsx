@@ -46,6 +46,7 @@ const SearchResults = ({...props}) => {
         store.addData(movies[event.target.value]._id)
     }
 
+    
     var moreResults = function() {
         if(moviedivs.length >= 5) {
             return <button onClick={() => setMovieCount(movieCount+5)}>Show more</button>
