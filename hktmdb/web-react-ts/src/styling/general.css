@@ -18,12 +18,6 @@
     text-align: center;
   }
 
-
-  #mobxExample {
-    grid-column-start: 1;
-    grid-column-end: 4;
-  }
-
   #input {
     grid-column-start: 1;
     grid-column-end: 2;
