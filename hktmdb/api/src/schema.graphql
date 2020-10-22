@@ -3,12 +3,14 @@ type Movie {
     title: String
     released: Int
     tagline: String
+    persons: [Person] @relation (name:"ACTED_IN", direction:"IN")
 }
 
 type Person {
   _id: ID!
   name: String
   born: Int
+  movies: [Movie] @relation (name:"ACTED_IN", direction:"OUT")
 }
 
 type SearchHistory @isAuthenticated {
