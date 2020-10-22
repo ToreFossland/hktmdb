@@ -43,8 +43,8 @@ class App extends React.Component<myProps, myState> {
         <Login/>
         <LogOut/>
         <SearchHistory/>
-        <div></div>
-        <div></div>
+        <SearchResults/>
+        <Search/>
         <div></div>
       </div>
     )
