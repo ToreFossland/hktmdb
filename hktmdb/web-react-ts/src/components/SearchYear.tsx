@@ -18,6 +18,7 @@ const SearchYear = ({...props}) => {
         props.onChange1(value);
     }
 
+    
     const handleChange2 = (event: any) => {
         var value = event.target.value;
         if (value === "") {

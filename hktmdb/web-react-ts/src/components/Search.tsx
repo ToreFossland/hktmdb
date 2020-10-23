@@ -1,16 +1,20 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
+import { useDataStore } from "../context";
 
 
 
-const Search = ({...props}) => {
-    
+
+const Search = () => {
+    const store = useDataStore();
+
     const handleChange = (event: any) => {
         var value = event.target.value;
         if (value === "") {
             value = "."
         }
-        props.onChange(value);
+        store.addFilterProps("searchInput", value);
+        console.log(store.filterProps.get("searchInput"))
     }
     return (
         <div>

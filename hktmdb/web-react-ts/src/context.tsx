@@ -10,7 +10,10 @@ const StoreContext = React.createContext<TStore | null>(null);
 export const DataStoreProvider = ({ children }: any) => {
     //Vi gjør store observable
     const store = useLocalStore(createStore);
-    return <StoreContext.Provider value={store}> {children} </StoreContext.Provider>;
+
+    return (
+        <StoreContext.Provider value={store}> {children}</StoreContext.Provider>
+    )
 };
 
 export const useDataStore = () => {
@@ -20,3 +23,5 @@ export const useDataStore = () => {
     }
     return store;
 }
+
+

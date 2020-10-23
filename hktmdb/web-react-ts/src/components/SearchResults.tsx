@@ -1,8 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
+import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
 import '../index.css';
-
 
 
 const SearchResults = ({...props}) => {
@@ -11,7 +11,7 @@ const SearchResults = ({...props}) => {
 
     useEffect(() => {
         setMovieCount(0);
-    }, [props.input, props.firstYear, props.secondYear, props.filterType])
+    }, [store.filterProps.get("searchInput"), props.firstYear, props.secondYear, props.filterType])
 
     const capitalizeFirstLetters = (input: string) => {
         var splitStr = input.toLowerCase().split(' ');
@@ -21,29 +21,30 @@ const SearchResults = ({...props}) => {
         return splitStr.join(' '); 
     }
 
+
     const GET_MOVIES = gql`
-    {
-        Movie(first:5 offset: ${movieCount}, orderBy: ${props.filterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(props.input)}", released_gte: ${props.firstYear}, released_lte: ${props.secondYear}}) {
-            _id
-            title
-            released
+        {
+            Movie(first:5 offset: ${movieCount}, orderBy: ${props.filterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(useObserver(() => (store.filterProps.get('searchInput')!)))}", released_gte: ${props.firstYear}, released_lte: ${props.secondYear}}) {
+                _id
+                title
+                released
+            }
         }
-    }
-`;
+    `;
 
     const { loading, error, data } = useQuery(GET_MOVIES)
     if (error) return <p>Error</p>
     if (loading) return <p>Fetching movies...</p>
 
+
     const movies = data.Movie.map((movie: any) => movie)
-    
     const moviedivs = []
     for(var i=0; i < movies.length; i++) {
         moviedivs[i] = <li value={i} onClick={(event) => showDetails(event)}>{movies[i].title}({movies[i].released}) </li>
     }
 
     function showDetails(event: any) {
-        store.addData(movies[event.target.value]._id)
+        store.addCurrentResultId(movies[event.target.value]._id)
     }
 
     

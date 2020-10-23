@@ -64,19 +64,17 @@ class App extends React.Component<myProps, myState> {
     return (
       <DataStoreProvider>
       <div id="grid-container">
-        
         <Login/>
         <LogOut/>
         <SearchHistory/>
         <SearchResults input={this.state.input} firstYear={this.state.firstYear} secondYear={this.state.secondYear} filterType={this.state.filterType}/>
         <div> 
-          <Search onChange={this.changeInput}/>
+          <Search/>
           <SearchYear onChange1={this.changeFirstYear} onChange2={this.changeSecondYear} /><br></br>
           <SearchType onChange={this.changeFilterType}/>
         </div>
         <MobxExample/>
-        
-        <div></div>
+        <div/>
       </div>
       </DataStoreProvider>
     )

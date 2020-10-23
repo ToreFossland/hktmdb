@@ -1,13 +1,37 @@
+
+
 export function createStore() {
+    
+  
+
+     
     return {
-        data: [] as string[],
-        addData(item: string) {
-        this.data.push(item);
-        },
-        removeData(item: string){
-        this.data.splice(this.data.indexOf(item), 1)
-        },
+
+        filterProps: new Map([
+            ["searchInput", "."],
+            ["firstYear", "2020"],
+            ["secondYear", "0"],
+            ["filterType", "title"]
+        ]),
+        addFilterProps(key:string, value:string) {this.filterProps.set(key, value)}, 
+
+
+        searchResults: [] as string[],
+        addsearchResults(item: string) {this.searchResults.push(item);},
+        removesearchResults(item: string){this.searchResults.splice(this.searchResults.indexOf(item), 1)},
+        
+
+
+
+        currentResultId: "",
+        addCurrentResultId(item: string) {this.currentResultId = item},
+        removeCurrentResultId(){this.currentResultId=""},
     };
 }
-    export type TStore = ReturnType<typeof createStore>;
-    
+
+
+
+
+
+export type TStore = ReturnType<typeof createStore>;
+
