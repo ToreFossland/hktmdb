@@ -9,12 +9,11 @@ export function createStore() {
 
         filterProps: new Map([
             ["searchInput", "."],
-            ["firstYear", "2020"],
-            ["secondYear", "0"],
+            ["firstYear", "0"],
+            ["secondYear", "2020"],
             ["filterType", "title"]
         ]),
         addFilterProps(key:string, value:string) {this.filterProps.set(key, value)}, 
-
 
         searchResults: [] as string[],
         addsearchResults(item: string) {this.searchResults.push(item);},

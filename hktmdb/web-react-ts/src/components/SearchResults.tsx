@@ -5,13 +5,18 @@ import { useDataStore } from "../context";
 import '../index.css';
 
 
-const SearchResults = ({...props}) => {
+const SearchResults = () => {
     const [movieCount, setMovieCount] = useState(0);
     const store = useDataStore();
+    let searchInput = useObserver(() => (store.filterProps.get("searchInput")))
+    let firstYear = useObserver(() => (store.filterProps.get("firstYear")))
+    let secondYear = useObserver(() => (store.filterProps.get("secondYear")))
+    let filterType = useObserver(() => (store.filterProps.get("filterType")))
+
 
     useEffect(() => {
         setMovieCount(0);
-    }, [store.filterProps.get("searchInput"), props.firstYear, props.secondYear, props.filterType])
+    }, [searchInput, firstYear, secondYear, filterType])
 
     const capitalizeFirstLetters = (input: string) => {
         var splitStr = input.toLowerCase().split(' ');
@@ -24,7 +29,7 @@ const SearchResults = ({...props}) => {
 
     const GET_MOVIES = gql`
         {
-            Movie(first:5 offset: ${movieCount}, orderBy: ${props.filterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(useObserver(() => (store.filterProps.get('searchInput')!)))}", released_gte: ${props.firstYear}, released_lte: ${props.secondYear}}) {
+            Movie(first:5 offset: ${movieCount}, orderBy: ${filterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(searchInput!)}", released_gte: ${firstYear}, released_lte: ${secondYear}}) {
                 _id
                 title
                 released
@@ -40,13 +45,12 @@ const SearchResults = ({...props}) => {
     const movies = data.Movie.map((movie: any) => movie)
     const moviedivs = []
     for(var i=0; i < movies.length; i++) {
-        moviedivs[i] = <li value={i} onClick={(event) => showDetails(event)}>{movies[i].title}({movies[i].released}) </li>
+        moviedivs[i] = <li key={movies[i]._id} value={i} onClick={(event) => showDetails(event)}>{movies[i].title}({movies[i].released}) </li>
     }
 
     function showDetails(event: any) {
         store.addCurrentResultId(movies[event.target.value]._id)
     }
-
     
     var moreResults = function() {
         if(moviedivs.length >= 5) {
