@@ -6,7 +6,7 @@ import '../index.css';
 
 
 const SearchResults = () => {
-    const [movieCount, setMovieCount] = useState(0);
+    const [movieCount, setMovieCount] = useState(5);
     const store = useDataStore();
     let searchInput = useObserver(() => (store.filterProps.get("searchInput")))
     let firstYear = useObserver(() => (store.filterProps.get("firstYear")))
@@ -15,8 +15,8 @@ const SearchResults = () => {
 
 
     useEffect(() => {
-        setMovieCount(0);
-    }, [searchInput, firstYear, secondYear, filterType])
+        setMovieCount(5)
+    }, [searchInput, firstYear, secondYear])
 
     const capitalizeFirstLetters = (input: string) => {
         var splitStr = input.toLowerCase().split(' ');
@@ -28,8 +28,8 @@ const SearchResults = () => {
 
 
     const GET_MOVIES = gql`
-        {
-            Movie(first:5 offset: ${movieCount}, orderBy: ${filterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(searchInput!)}", released_gte: ${firstYear}, released_lte: ${secondYear}}) {
+        query movieQuery($offset: Int!){
+            Movie(first:5 offset: $offset, orderBy: ${filterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(searchInput!)}", released_gte: ${firstYear}, released_lte: ${secondYear}}) {
                 _id
                 title
                 released
@@ -37,24 +37,41 @@ const SearchResults = () => {
         }
     `;
 
-    const { loading, error, data } = useQuery(GET_MOVIES)
+    const { loading, error, data, fetchMore } = useQuery(GET_MOVIES, {
+        variables: {
+            offset: 0
+        },
+        fetchPolicy: "cache-and-network"
+    });
     if (error) return <p>Error</p>
     if (loading) return <p>Fetching movies...</p>
 
 
-    const movies = data.Movie.map((movie: any) => movie)
+    let movies = data.Movie.map((movie: any) => movie)
     const moviedivs = []
     for(var i=0; i < movies.length; i++) {
         moviedivs[i] = <li key={movies[i]._id} value={i} onClick={(event) => showDetails(event)}>{movies[i].title}({movies[i].released}) </li>
     }
+    
 
     function showDetails(event: any) {
         store.addCurrentResultId(movies[event.target.value]._id)
     }
     
-    var moreResults = function() {
-        if(moviedivs.length >= 5) {
-            return <button onClick={() => setMovieCount(movieCount+5)}>Show more</button>
+    var moreResults = function(input: number) {
+        if(input == movieCount) {
+
+            return <button onClick={ () => {setMovieCount(movieCount+5); fetchMore({
+                variables: {
+                offset: input
+                },
+                updateQuery: (prev, { fetchMoreResult }) => {
+                if (!fetchMoreResult) return prev;
+                return Object.assign({}, prev, {
+                    Movie: [...prev.Movie, ...fetchMoreResult.Movie]
+                });
+                }
+            });}}>Show more</button>
         }
     }
 
@@ -62,7 +79,7 @@ const SearchResults = () => {
     return (
         <div>
             <ul className="moviediv">{moviedivs}</ul>
-            {moreResults()}
+            {moreResults(moviedivs.length)}
         </div>
     );
 }
