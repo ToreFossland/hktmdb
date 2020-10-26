@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { useDataStore } from "../context";
 
@@ -11,14 +11,14 @@ const SearchInput = () => {
     const handleChange = (event: any) => {
         var value = event.target.value;
         if (value === "") {
-            value = "."
+            value = "---"
         }
         store.addFilterProps("searchInput", value);
     }
     return (
         <div>
             <form>
-                <h3> Search for a movie: </h3>
+                <h3> Search for a movie or person: </h3>
                 <input type="text" onChange={handleChange}/>
             </form>
         </div>
@@ -64,7 +64,7 @@ const SearchYear = () => {
     return (
         <div>
             <h3> Filter between years: </h3>
-            <input placeholder="1960" type="number" min="0" max="2020" onChange={handleChange1}/>-
+            <input placeholder="1920" type="number" min="0" max="2020" onChange={handleChange1}/>-
             <input placeholder="2020" type="number" min="0" max="2020" onChange={handleChange2}/>
         </div>
     );
@@ -72,12 +72,22 @@ const SearchYear = () => {
 
 
 
-const SearchType = () => {
+const SearchSort = () => {
     const store = useDataStore();
 
     const handleChange = (event: any) => {
-        store.addFilterProps("filterType", event.target.value);
+        let value = event.target.value;
+        store.addFilterProps("movieFilterType", value);
+
+        if(value == "title") {
+            store.addFilterProps("personFilterType", "name");
+        }
+
+        if(value == "released") {
+            store.addFilterProps("personFilterType", "born");
+        }
     }
+    
     
     return (
         <div onChange={handleChange}>
@@ -88,6 +98,32 @@ const SearchType = () => {
     );
 }
 
+const SearchType = () => {
+    const store = useDataStore();
+
+    const [type, setType] = useState("Movie");
+
+    const handleChange = () => {
+        if(type == "Movie") {
+            setType("Person");
+            store.addFilterProps("dataFilterType", "Person");
+        }
+
+        else {
+            setType("Movie");
+            store.addFilterProps("dataFilterType", "Movie");
+        }
+    }
+    
+    
+    return (
+        <div>
+            Sort by: <br></br>
+            <button onClick={handleChange}>{type}</button>
+        </div>
+    );
+    }
+
 
 
 
@@ -96,8 +132,9 @@ export default function Search() {
     return(
         <div>
             <SearchInput/>
-            <SearchYear/>
             <SearchType/>
+            <SearchYear/>
+            <SearchSort/>
         </div>
     )
 };
