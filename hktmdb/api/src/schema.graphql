@@ -4,6 +4,9 @@ type Movie {
     released: Int
     tagline: String
     persons: [Person] @relation (name:"ACTED_IN", direction:"IN")
+    directors: [Person] @relation (name:"DIRECTED", direction:"IN")
+    producers: [Person] @relation (name:"PRODUCED", direction:"IN")
+    writers: [Person] @relation (name:"WROTE", direction:"IN")
 }
 
 type Person {
@@ -11,9 +14,13 @@ type Person {
   name: String
   born: Int
   movies: [Movie] @relation (name:"ACTED_IN", direction:"OUT")
+  directed: [Movie] @relation (name:"DIRECTED", direction:"OUT")
+  produced: [Movie] @relation (name:"PRODUCED", direction:"OUT")
+  wrote: [Person] @relation (name:"WROTE", direction:"OUT")
 }
 
 type SearchHistory @isAuthenticated {
   query: String
   date: String
 }
+

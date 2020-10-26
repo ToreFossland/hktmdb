@@ -22,7 +22,7 @@ export function createStore() {
 
 
 
-        currentResultId: "",
+        currentResultId: "1",
         addCurrentResultId(item: string) {this.currentResultId = item},
         removeCurrentResultId(){this.currentResultId=""},
     };
