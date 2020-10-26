@@ -8,10 +8,12 @@ export function createStore() {
     return {
 
         filterProps: new Map([
-            ["searchInput", "."],
+            ["searchInput", "---"],
             ["firstYear", "0"],
             ["secondYear", "2020"],
-            ["filterType", "title"]
+            ["movieFilterType", "title"],
+            ["personFilterType", "name"],
+            ["dataFilterType", "Movie"]
         ]),
         addFilterProps(key:string, value:string) {this.filterProps.set(key, value)}, 
 
