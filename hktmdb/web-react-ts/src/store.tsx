@@ -21,12 +21,12 @@ export function createStore() {
 
 
 
-        currentResultId: "1",
+        currentResultId: "177",
         addCurrentResultId(item: string) {this.currentResultId = item},
         removeCurrentResultId(){this.currentResultId=""},
 
 
-        currentPersonId: "142",
+        currentPersonId: "172",
         addCurrentPersonId(item: string) {this.currentPersonId = item},
         removeCurrentPersonId(){this.currentPersonId=""},
     };

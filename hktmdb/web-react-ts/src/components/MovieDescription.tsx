@@ -188,7 +188,7 @@ const MovieDescription = () => {
         return reviewHTMLlist
     }
 
-    if(whichData === "Movie"){
+    if(whichData === "Movie" && currentResultID != "177"){
         return (
             <div>
                 <h1> {movie.title} </h1>
@@ -200,7 +200,7 @@ const MovieDescription = () => {
                 </div>
             </div>
         );
-    }else {
+    }else if(whichData === "Person" && currentPersonID != "172") {
         return (
             <div>
                 <h1>{person.name}</h1>
@@ -209,6 +209,9 @@ const MovieDescription = () => {
             </div>
         )
 
+    }
+    else {
+        return <div></div>
     }
 }
 
