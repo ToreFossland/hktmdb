@@ -19,13 +19,9 @@ export function createStore() {
         removesearchResults(item: string){this.searchResults.splice(this.searchResults.indexOf(item), 1)},
         
 
-<<<<<<< HEAD
 
 
         currentResultId: "1",
-=======
-        currentResultId: "",
->>>>>>> Api-with-resolver-2
         addCurrentResultId(item: string) {this.currentResultId = item},
         removeCurrentResultId(){this.currentResultId=""},
     };
