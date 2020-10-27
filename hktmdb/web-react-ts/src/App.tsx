@@ -1,5 +1,4 @@
 import React from 'react'
-import MobxExample from './components/MobxExample';
 import Search from './components/Search';
 import SearchResults from './components/SearchResults';
 import SearchHistory from './components/SearchHistory';
@@ -33,7 +32,6 @@ class App extends React.Component {
           <h1>Results:</h1>
           <SearchResults/>
         </div>
-        <MobxExample/>
         <MovieDescription/>
       </div>
       </DataStoreProvider>

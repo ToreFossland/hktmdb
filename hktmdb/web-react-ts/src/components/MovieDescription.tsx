@@ -12,7 +12,8 @@ interface Movie{
     actors: string[],
     directors: string[],
     producers: string[],
-    writers: string[]
+    writers: string[],
+    reviews: MovieReview[]
 }
 
 interface Person{
@@ -23,6 +24,13 @@ interface Person{
     produced: string[],
     wrote: string[]
 }
+
+interface MovieReview {
+    header: String,
+    review: String,
+    score: number,
+    userId: String
+  }
 
 const MovieDescription = () => {
     //Initializing state, this gql query never runs
@@ -39,7 +47,8 @@ const MovieDescription = () => {
         actors: [],
         directors: [],
         producers: [],
-        writers: []
+        writers: [],
+        reviews: []
     };
 
     const dummyPerson : Person = {
@@ -77,6 +86,12 @@ const MovieDescription = () => {
                 }
                 writers{
                     name
+                }
+                reviews{
+                    header
+                    review
+                    score
+                    userId
                 }
             }
         }
@@ -132,7 +147,8 @@ const MovieDescription = () => {
                     actors: currentMovie.persons.map((person: any) => person.name),
                     directors: currentMovie.directors.map((person: any) => person.name),
                     producers: currentMovie.producers.map((person: any) => person.name),
-                    writers: currentMovie.writers.map((person: any) => person.name)
+                    writers: currentMovie.writers.map((person: any) => person.name),
+                    reviews: currentMovie.reviews.map((review: any) => [review.header, review.review, review.score, review.userId])
                 }
                 setMovie(fuckmovie)
             }
@@ -157,7 +173,20 @@ const MovieDescription = () => {
         }
     }, [data, whichData, store.currentPersonId])
 
+    const Reviews = () => {
 
+        let reviewHTMLlist = []
+        for(var i=0; i < movie.reviews.length; i++) {
+            reviewHTMLlist[i] =
+                <div className="reviews">
+                    <p>{movie.reviews[i].header}</p>
+                    <p>{movie.reviews[i].review}</p>
+                    <p>{movie.reviews[i].score}</p>
+                    <p>{movie.reviews[i].userId}</p>
+                </div>
+        }
+        return reviewHTMLlist
+    }
 
     if(whichData === "Movie"){
         return (
@@ -166,6 +195,9 @@ const MovieDescription = () => {
                 <ul> {movie.actors} </ul>
                 <ul> {movie.directors} </ul>
                 <ul> {movie.producers} </ul>
+                <div>
+                    {Reviews}
+                </div>
             </div>
         );
     }else {

@@ -89,7 +89,7 @@ app.listen({ host, port, path }, () => {
 CREATE (n:MovieReview {userId:'auth0|5f903d3f7539d1006893182f', header: 'haakon', review: 'Developer', score:'3' })
 CREATE (n:MovieReview {userId:'5f903d3f7539d1006893182f', header: 'haakon', review: 'Developer', score:'3' })
 
-MATCH (MovieReview)
+MATCH (n:MovieReview), (k:Movie)
 WHERE ID(MovieReview) = 175
 RETURN MovieReview
 
@@ -97,7 +97,7 @@ RETURN MovieReview
 //LAGE EN RELASJON MELLOM NODER
 MATCH (n:MovieReview),(k:Movie)
 WHERE  id(n) = 175 AND id(k) = 92
-CREATE (n)-[r:RELTYPE]->(k)
+CREATE (n)-[r:REVIEW_OF]->(k)
 RETURN type(r)
 
 

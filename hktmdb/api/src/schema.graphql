@@ -7,6 +7,7 @@ type Movie {
     directors: [Person] @relation (name:"DIRECTED", direction:"IN")
     producers: [Person] @relation (name:"PRODUCED", direction:"IN")
     writers: [Person] @relation (name:"WROTE", direction:"IN")
+    reviews: [MovieReview] @relation (name:"REVIEW_OF", direction:"IN")
 }
 
 type Person {
@@ -17,6 +18,7 @@ type Person {
   directed: [Movie] @relation (name:"DIRECTED", direction:"OUT")
   produced: [Movie] @relation (name:"PRODUCED", direction:"OUT")
   wrote: [Movie] @relation (name:"WROTE", direction:"OUT")
+  reviews: [MovieReview] @relation (name:"REVIEW_OF", direction:"OUT")
 }
 
 type SearchHistory @isAuthenticated {
@@ -31,6 +33,7 @@ type MovieReview {
   header: String
   review: String
   score: Int
+  userId: String
 }
 
 
