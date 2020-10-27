@@ -33,7 +33,7 @@ const SearchResults = () => {
     const getQueries = function() {
         let GET_DATA;
 
-        if(whichData == "Movie") {
+        if(whichData === "Movie") {
             GET_DATA = gql`
                 query movieQuery($offset: Int!){
                     Movie(first:5, offset: $offset, orderBy: ${movieFilterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(searchInput!)}", released_gte: ${firstYear}, released_lte: ${secondYear}}) {
@@ -103,11 +103,15 @@ const SearchResults = () => {
     
 
     function showDataDetails(event: any) {
-        store.addCurrentResultId(getDataElements()[event.target.value]._id)
+        if(whichData === "Movie"){
+            store.addCurrentResultId(getDataElements()[event.target.value]._id)
+        }else{
+            store.addCurrentPersonId(getDataElements()[event.target.value]._id)
+        }
     }
 
     const fetch = function(input: number){ 
-        if(whichData == "Movie") {
+        if(whichData === "Movie") {
             fetchMore({
                 variables: {
                 offset: input
@@ -137,7 +141,7 @@ const SearchResults = () => {
     }
     
     var moreResults = function(input: number) {
-        if(input == dataCount) {
+        if(input === dataCount) {
 
             return <button id="showMoreButton" onClick={ () => {setDataCount(dataCount+5); fetch(input)}}>Show more</button>
             
