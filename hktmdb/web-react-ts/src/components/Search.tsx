@@ -3,8 +3,6 @@ import { gql, useQuery } from '@apollo/client';
 import { useDataStore } from "../context";
 
 
-
-
 const SearchInput = () => {
     const store = useDataStore();
 

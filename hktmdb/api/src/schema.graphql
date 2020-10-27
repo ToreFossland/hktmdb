@@ -16,4 +16,17 @@ type Person {
 type SearchHistory @isAuthenticated {
   query: String
   date: String
+  me: String! @neo4j_ignore
 }
+
+
+type MovieReview {
+  _id: ID!
+  header: String
+  review: String
+  score: Int
+}
+
+
+
+
