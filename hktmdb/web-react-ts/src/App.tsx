@@ -22,13 +22,13 @@ class App extends React.Component {
     return (
       <DataStoreProvider>
       <div id="grid-container">
-        <img src={require("./resources/hktMDB.svg")} />
+        <img id="Header" src={require("./resources/hktMDB.svg")} />
         <div>
           <Login/>
           <LogOut/>
         </div>
         <SearchHistory/>
-        <div>
+        <div id="Search">
           <Search/><br></br>
           <h1>Results:</h1>
           <SearchResults/>
