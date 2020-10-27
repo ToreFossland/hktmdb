@@ -6,6 +6,7 @@ import { useObserver } from 'mobx-react-lite';
 
 const MobxExample= () => {
     const dataStore = useDataStore();
+    
     return useObserver(() => (
         <p>{dataStore.currentResultId}</p>
     ))

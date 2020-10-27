@@ -4,8 +4,6 @@ import { useDataStore } from "../context";
 import '../styling/search.css';
 import '../styling/general.css';
 
-
-
 const SearchInput = () => {
     const store = useDataStore();
 

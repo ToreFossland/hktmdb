@@ -4,8 +4,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 const LogoutButton = () => {
   const { logout } = useAuth0();
 
+  function removeToken(){
+    localStorage.removeItem("accessToken")
+    localStorage.removeItem("userID")
+  }
+
+
   return (
-    <button onClick={() => logout({ returnTo: window.location.origin })}>
+    <button onClick={() => {logout({ returnTo: window.location.origin}); removeToken();}}>
       Log Out
     </button>
   );

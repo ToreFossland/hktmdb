@@ -10,16 +10,20 @@ import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
 
 
 const AppWithApollo = () => {
-  const [accessToken, setAccessToken] = useState("")
-  const { getAccessTokenSilently, loginWithRedirect } = useAuth0()
+  const { getAccessTokenSilently, loginWithRedirect, user } = useAuth0()
+
 
   const getAccessToken = useCallback(async () => {
     try {
-      const token = await getAccessTokenSilently()
-      console.log(token)
-      setAccessToken(token)
+      let token = await getAccessTokenSilently()
+      localStorage.setItem("accessToken", token);
+      let userIdTemp = await user.sub.split("|")[1]
+      if(typeof userIdTemp != 'undefined'){
+        localStorage.setItem("userID", userIdTemp);
+        console.log(userIdTemp)
+        console.log("user id ble hentet!")
+      }
     } catch (err) {
-      //loginWithRedirect()
     }
   }, [getAccessTokenSilently, loginWithRedirect])
 
@@ -27,9 +31,7 @@ const AppWithApollo = () => {
     getAccessToken()
   }, [getAccessToken])
 
-  
-
-  const cache = new InMemoryCache();
+const cache = new InMemoryCache();
 
 const httpLink = createHttpLink({
   uri: process.env.REACT_APP_GRAPHQL_URI || 'http://localhost:4001/graphql'
@@ -37,12 +39,22 @@ const httpLink = createHttpLink({
 
 
 const authLink = setContext((_, { headers }) => {
-  if (accessToken) {
+  let test = localStorage.getItem("accessToken");
+  let userid = localStorage.getItem("userID");
+  if (test) {
   return {
       headers: {
           ...headers,
-          Authorization: `Bearer ${accessToken}`,
+          userid,
+          Authorization: `Bearer ${test}`,
       }
+    }
+  }else {
+    return{
+    headers: {
+      userid,
+      ...headers,
+    }
   }
 }
 });
