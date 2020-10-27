@@ -8,7 +8,10 @@ const MobxExample= () => {
     const dataStore = useDataStore();
     
     return useObserver(() => (
-        <p>{dataStore.currentResultId}</p>
+        <div>
+            <p>{dataStore.currentResultId}</p>
+            <p>{dataStore.currentPersonId}</p>
+        </div>
     ))
   }
 
