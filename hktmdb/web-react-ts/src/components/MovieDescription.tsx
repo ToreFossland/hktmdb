@@ -15,62 +15,172 @@ interface Movie{
     writers: string[]
 }
 
+interface Person{
+    name: string,
+    born:  number,
+    acted: string[],
+    directed: string[],
+    produced: string[],
+    wrote: string[]
+}
+
 const MovieDescription = () => {
+    //Initializing state, this gql query never runs
+    const [query, setQuery] = useState(gql`{
+        Movie{
+            title
+        }
+    }`);
+
+    const dummyMovie : Movie = {
+        title: "fuck you",
+        released:  1,
+        tagline: "",
+        actors: [],
+        directors: [],
+        producers: [],
+        writers: []
+    };
+
+    const dummyPerson : Person = {
+        name: "",
+        born:  1,
+        acted: [],
+        directed: [],
+        produced: [],
+        wrote: []
+    }
+    //Dummy data for the hooks before actual data is ready to be shown
+    const [movie, setMovie] = useState(dummyMovie)
+    const [person, setPerson] = useState(dummyPerson)
+
 
     const store = useDataStore();
-
+    let whichData = useObserver(() => (store.filterProps.get("dataFilterType")))
     let currentResultID = useObserver(() => store.currentResultId);
+    let currentPersonID = useObserver(() => store.currentPersonId);
 
     const GET_MOVIE_DETAILS = gql`
         {
-          Movie(_id: ${currentResultID}){
-            title
-            released
-            tagline
-            persons{
-              name
+            Movie(_id: ${currentResultID}){
+                title
+                released
+                tagline
+                persons{
+                    name
+                }
+                directors{
+                    name
+                }
+                producers{
+                    name
+                }
+                writers{
+                    name
+                }
             }
-            directors{
-              name
-            }
-            producers{
-             name
-            }
-            writers{
-             name
-            }
-          }
         }
     `;
 
-    const { loading, error, data } = useQuery(GET_MOVIE_DETAILS)
-    if (error) return <p>Error</p>
-    if (loading) return <p>Fetching movies...</p>
-    console.log(data.Movie[0].writers.map((person:any) => person.name))
+    const GET_PERSON_DETAILS = gql`
+        {
+            Person(_id: ${currentPersonID}){
+                name
+                born
+                acted{
+                    title
+                }
+                directed{
+                    title
+                }
+                produced{
+                    title
+                }
+                wrote{
+                    title
+                }
+            }
+        }
+    `;
 
-    let currentMovie = data.Movie[0]
 
-    const movie: Movie = {
-        title: currentMovie.title,
-        released: currentMovie.released,
-        tagline: currentMovie.tagline,
-        actors: currentMovie.persons.map((person:any) => person.name),
-        directors: currentMovie.directors.map((person:any) => person.name),
-        producers: currentMovie.producers.map((person:any) => person.name),
-        writers: currentMovie.writers.map((person:any) => person.name)
+
+    //Kan ikke flytte all koden inn i if setningen fordi useQuery ikke kan være inne i en conditional
+    useEffect(() => {
+        if(whichData === "Movie"){
+            setQuery(GET_MOVIE_DETAILS);
+        }else{
+            setQuery(GET_PERSON_DETAILS)
+        }
+    }, [GET_MOVIE_DETAILS, GET_PERSON_DETAILS, whichData])
+
+
+
+    const { loading, error, data } = useQuery(query)
+    console.log(data)
+
+
+    useEffect(() => {
+        if(whichData === "Movie" && data) {
+            console.log(data)
+            if(typeof data.Movie != 'undefined'){
+                let currentMovie = data.Movie[0]
+                const fuckmovie: Movie = {
+                    title: currentMovie.title,
+                    released: currentMovie.released,
+                    tagline: currentMovie.tagline,
+                    actors: currentMovie.persons.map((person: any) => person.name),
+                    directors: currentMovie.directors.map((person: any) => person.name),
+                    producers: currentMovie.producers.map((person: any) => person.name),
+                    writers: currentMovie.writers.map((person: any) => person.name)
+                }
+                setMovie(fuckmovie)
+            }
+        }
+    }, [data, whichData, store.currentResultId])
+
+    useEffect(() => {
+        if(whichData === "Person" && data) {
+            console.log(data)
+            if(typeof data.Person != 'undefined'){
+                let currentPerson = data.Person[0]
+                const fuckperson: Person = {
+                    name: currentPerson.name,
+                    born:  currentPerson.born,
+                    acted: currentPerson.acted.map((movie:any) => movie.title),
+                    directed: currentPerson.directed,
+                    produced: currentPerson.produced,
+                    wrote: currentPerson.wrote
+                }
+                setPerson(fuckperson)
+            }
+        }
+    }, [data, whichData, store.currentPersonId])
+
+
+
+    if(whichData === "Movie"){
+        return (
+            <div>
+                <h1> {movie.title} </h1>
+                <ul> {movie.actors} </ul>
+                <ul> {movie.directors} </ul>
+                <ul> {movie.producers} </ul>
+            </div>
+        );
+    }else {
+        return (
+            <div>
+                <h1>{person.name}</h1>
+                <h1>Born: {person.born}</h1>
+                <ul>{person.acted}</ul>
+            </div>
+        )
 
     }
-
-    return (
-        <div>
-           <h1> {movie.title} </h1>
-            <ul> {movie.actors} </ul>
-            <ul> {movie.directors} </ul>
-            <ul> {movie.producers} </ul>
-        </div>
-    );
-
 }
+
+
 
 
 export default MovieDescription;

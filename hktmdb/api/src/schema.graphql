@@ -13,10 +13,10 @@ type Person {
   _id: ID!
   name: String
   born: Int
-  movies: [Movie] @relation (name:"ACTED_IN", direction:"OUT")
+  acted: [Movie] @relation (name:"ACTED_IN", direction:"OUT")
   directed: [Movie] @relation (name:"DIRECTED", direction:"OUT")
   produced: [Movie] @relation (name:"PRODUCED", direction:"OUT")
-  wrote: [Person] @relation (name:"WROTE", direction:"OUT")
+  wrote: [Movie] @relation (name:"WROTE", direction:"OUT")
 }
 
 type SearchHistory @isAuthenticated {
