@@ -21,11 +21,17 @@ class App extends React.Component {
     return (
       <DataStoreProvider>
       <div id="grid-container">
-        <Login/>
-        <LogOut/>
+        <img src={require("./resources/hktMDB.svg")} />
+        <div>
+          <Login/>
+          <LogOut/>
+        </div>
         <SearchHistory/>
-        <SearchResults/>
-        <Search/>
+        <div>
+          <Search/><br></br>
+          <h1>Results:</h1>
+          <SearchResults/>
+        </div>
         <MobxExample/>
         <div/>
       </div>

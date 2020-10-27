@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import { useDataStore } from "../context";
-
+import '../styling/search.css';
+import '../styling/general.css';
 
 
 
@@ -18,8 +19,7 @@ const SearchInput = () => {
     return (
         <div>
             <form>
-                <h3> Search for a movie or person: </h3>
-                <input type="text" onChange={handleChange}/>
+                <input id="search_input" placeholder="Search" type="text" onChange={handleChange}/>
             </form>
         </div>
     );
@@ -63,9 +63,11 @@ const SearchYear = () => {
     }
     return (
         <div>
-            <h3> Filter between years: </h3>
-            <input placeholder="1920" type="number" min="0" max="2020" onChange={handleChange1}/>-
-            <input placeholder="2020" type="number" min="0" max="2020" onChange={handleChange2}/>
+            <p> Filter between years: </p>
+            <div>
+                <input placeholder="1920" type="number" min="0" max="2020" onChange={handleChange1}/>-
+                <input placeholder="2020" type="number" min="0" max="2020" onChange={handleChange2}/>
+            </div>
         </div>
     );
 }
@@ -91,9 +93,9 @@ const SearchSort = () => {
     
     return (
         <div onChange={handleChange}>
-            Sort by: <br></br>
-            <input value="title" type="radio" name="filter" defaultChecked/>Title
-            <input value="released" type="radio" name="filter"/>Year
+            <p>Sort by:</p>
+            <p><input value="title" type="radio" name="filter" defaultChecked/>Title</p>
+            <p><input value="released" type="radio" name="filter"/>Year</p>
         </div>
     );
 }
@@ -118,8 +120,7 @@ const SearchType = () => {
     
     return (
         <div>
-            Sort by: <br></br>
-            <button onClick={handleChange}>{type}</button>
+            <p>Searching for: <button id="search_type" onClick={handleChange}>{type}</button></p>
         </div>
     );
     }
@@ -127,14 +128,30 @@ const SearchType = () => {
 
 
 
-
 export default function Search() {
+
+    const [filterShow, setFilterShow] = useState("none");
+    const showFilterOptions = () => {
+        if(filterShow == "none") {
+            setFilterShow("block");
+        }
+
+        else {
+            setFilterShow("none");
+        }
+}
     return(
         <div>
-            <SearchInput/>
-            <SearchType/>
-            <SearchYear/>
-            <SearchSort/>
+            <div>
+                <SearchInput/>
+                <SearchType/>
+            </div>
+            
+            <button id="buttonShowFilter" onClick={() => showFilterOptions()}>Filter options:<img style={{verticalAlign:-7}} src={require("../resources/expand_more-24px.svg")}/></button>
+            <div style={{display: filterShow}} id="filter_container">
+                <SearchSort/>
+                <SearchYear/>
+            </div>
         </div>
     )
 };

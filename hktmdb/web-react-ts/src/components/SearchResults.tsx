@@ -2,7 +2,8 @@ import { gql, useQuery } from '@apollo/client';
 import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
-import '../index.css';
+import '../styling/search.css';
+import '../styling/general.css';
 
 
 const SearchResults = () => {
@@ -138,7 +139,7 @@ const SearchResults = () => {
     var moreResults = function(input: number) {
         if(input == dataCount) {
 
-            return <button onClick={ () => {setDataCount(dataCount+5); fetch(input)}}>Show more</button>
+            return <button id="showMoreButton" onClick={ () => {setDataCount(dataCount+5); fetch(input)}}>Show more</button>
             
         }
     }
