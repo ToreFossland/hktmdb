@@ -21,6 +21,11 @@ const SearchResults = () => {
         setDataCount(5)
     }, [searchInput, firstYear, secondYear, movieFilterType, whichData])
 
+    useEffect(() => {
+        store.addCurrentPersonId("172");
+        store.addCurrentResultId("177");
+    }, [whichData, searchInput])
+
 
     const capitalizeFirstLetters = (input: string) => {
         var splitStr = input.toLowerCase().split(' ');

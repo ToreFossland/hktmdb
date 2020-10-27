@@ -33,7 +33,6 @@ class App extends React.Component {
           <h1>Results:</h1>
           <SearchResults/>
         </div>
-        <MobxExample/>
         <MovieDescription/>
       </div>
       </DataStoreProvider>
