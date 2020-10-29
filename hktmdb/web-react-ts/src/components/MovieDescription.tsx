@@ -2,7 +2,7 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
-import '../styling/search.css';
+import '../styling/moviedescription_review.css';
 
 
 interface Movie{

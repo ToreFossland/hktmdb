@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
-import '../styling/search.css';
+import '../styling/searchresults.css';
 import '../styling/general.css';
 
 
@@ -40,8 +40,8 @@ const SearchResults = () => {
 
         if(whichData === "Movie") {
             GET_DATA = gql`
-                query movieQuery($offset: Int!){
-                    Movie(first:5, offset: $offset, orderBy: ${movieFilterType}_asc, filter: {title_contains: "${capitalizeFirstLetters(searchInput!)}", released_gte: ${firstYear}, released_lte: ${secondYear}}) {
+                query movieQuery($offset: Int!, $searchInput: String!, $firstYear: Int!, $secondYear: Int!){
+                    Movie(first:5, offset: $offset, orderBy: ${movieFilterType}_asc, filter: {title_contains: $searchInput, released_gte: $firstYear, released_lte: $secondYear}) {
                         _id
                         title
                         released
@@ -54,8 +54,8 @@ const SearchResults = () => {
 
         else {
             GET_DATA = gql`
-                query personQuery($offset: Int!){
-                    Person(first:5, offset: $offset, orderBy: ${personFilterType}_asc, filter: {name_contains: "${capitalizeFirstLetters(searchInput!)}", born_gte: ${firstYear}, born_lte: ${secondYear}}) {
+                query personQuery($offset: Int!, $searchInput: String!, $firstYear: Int!, $secondYear: Int!){
+                    Person(first:5, offset: $offset, orderBy: ${personFilterType}_asc, filter: {name_contains: $searchInput, born_gte: $firstYear, born_lte: $secondYear}) {
                         _id
                         name
                         born
@@ -72,8 +72,12 @@ const SearchResults = () => {
 
     const { loading, error, data, fetchMore } = useQuery(getQueries(), {
         variables: {
-            offset: 0
-        },
+            offset: 0,
+            searchInput: capitalizeFirstLetters(searchInput!),
+            firstYear: parseInt(firstYear!),
+            secondYear: parseInt(secondYear!)
+        }
+        ,
         fetchPolicy: "cache-and-network"
     });
     if (error) return <div><h1>Results:</h1><p>Error</p></div>
@@ -120,7 +124,10 @@ const SearchResults = () => {
         if(whichData === "Movie") {
             fetchMore({
                 variables: {
-                offset: input
+                offset: input,
+                searchInput: capitalizeFirstLetters(searchInput!),
+                firstYear: parseInt(firstYear!),
+                secondYear: parseInt(secondYear!)
             },
             updateQuery: (prev, { fetchMoreResult }) => {
             if (!fetchMoreResult) return prev;
@@ -134,7 +141,10 @@ const SearchResults = () => {
         else {
             fetchMore({
                 variables: {
-                offset: input
+                offset: input,
+                searchInput: capitalizeFirstLetters(searchInput!),
+                firstYear: parseInt(firstYear!),
+                secondYear: parseInt(secondYear!)
             },
             updateQuery: (prev, { fetchMoreResult }) => {
             if (!fetchMoreResult) return prev;

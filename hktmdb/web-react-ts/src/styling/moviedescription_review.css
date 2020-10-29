@@ -1,0 +1,100 @@
+#data_details {
+    padding: 10px;
+    margin: auto;
+    border-radius: 25px;
+    background-color: #eee;
+    width: 50vw;
+    box-shadow: inset 0 0 5px 1px #000;
+    max-width: 500px;
+}
+
+#data_details > h1 {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+#data_details > h6 {
+    font-weight: lighter;
+}
+
+#data_details > ul {
+    font-size: 25px;
+    font-weight: lighter;
+    margin-left: -50px;
+}
+
+#data_details > ul > li {
+    font-size: 20px;
+    list-style-type: none;
+}
+
+.reviews {
+    display: flex;
+    overflow: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    border-top: 2px solid #ccc;
+}
+
+.reviews > div {
+    height: auto;
+    padding: 10px;
+    min-width: 150px;
+    max-width: 150px;
+}
+
+.reviews > div:not(:last-child) {
+    border-right: 2px solid #ccc;
+}
+
+.reviews > div > p, h1 {
+    white-space: initial;
+}
+
+#remove_button {
+    border-radius: 5px;
+    border: 1px solid #aaa;
+}
+
+
+#add_review {
+    padding: 10px;
+    margin: auto;
+    border-radius: 15px;
+    background-color: #eee;
+    width: 30vw;
+    box-shadow: inset 0 0 3px 1px #000;
+    max-width: 500px;
+}
+#add_review > form > input {
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    box-shadow: inset 0 0 2px 1px #333;
+}
+
+#add_review > form > h3 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 20px;
+}
+
+#add_review > form > p > input {
+    outline: none;
+    height: 20px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: inset 0 0 2px 1px #333;
+}
+#add_review > form > input:nth-of-type(2){
+    height:100px;
+}
+#add_review > form > input:nth-of-type(1){
+    height:20px;
+}
+
+#add_review > form > button {
+    background-color: #ddd;
+    border-radius: 10px;
+    height: 35px;
+    border: 1px solid #aaa;
+}
