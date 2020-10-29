@@ -11,9 +11,12 @@ import AddMovie from './components/AddMovie';
 import {useLocalStore, useObserver} from "mobx-react";
 import { DataStoreProvider } from './context'
 import './styling/general.css';
+import './styling/searchresults.css';
+import './styling/search.css';
+import './styling/moviedescription_review.css';
 import auth0 from "@auth0/auth0-react";
 import { useAuth0 } from "@auth0/auth0-react";
-import './styling/search.css';
+
 
 
 

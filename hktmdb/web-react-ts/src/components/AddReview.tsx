@@ -62,21 +62,28 @@ const AddMovie = () => {
         }
         return false;
     }
+    if (currentResultID != "177"){
+        return (
+            <div> 
+                <div id="add_review">
+                    <form>
+                        <h3> Add a review to the selected movie: </h3>
+                        <p>Review Title</p>
+                        <input type="text" onChange={e => setHeader(e.target.value)} required/><br></br>
+                        <p>Text:</p>
+                        <textarea  onChange={e => setReviewText(e.target.value)} required/><br></br>
+                        <p>Score (1-10): <input type="number" min="1" max="10" onChange={e => setScore(e.target.value)} required/><br></br></p>
+                        
+                        <button onClick={(e) => {submitReviewHandler(e)}}> Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        );
+    }
 
-    return (
-        <div>
-            <form>
-                <h3> Add a movie: </h3>
-                <p>Header:</p>
-                <input type="text" onChange={e => setHeader(e.target.value)} required/><br></br>
-                <p>Review</p>
-                <input type="text" onChange={e => setReviewText(e.target.value)} required/><br></br>
-                <p>Score</p>
-                <input type="number" onChange={e => setScore(e.target.value)} required/><br></br>
-                <button onClick={(e) => {submitReviewHandler(e)}}> Add Movie</button>
-            </form>
-        </div>
-    );
+    else {
+        return <div></div>
+    }
 }
 
 
