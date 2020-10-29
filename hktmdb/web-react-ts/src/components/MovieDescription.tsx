@@ -68,6 +68,7 @@ const MovieDescription = () => {
     let whichData = useObserver(() => (store.filterProps.get("dataFilterType")))
     let currentResultID = useObserver(() => store.currentResultId);
     let currentPersonID = useObserver(() => store.currentPersonId);
+    let refreshFlag = useObserver(() => store.refreshFlag);
 
     const GET_MOVIE_DETAILS = gql`
         {
@@ -131,11 +132,12 @@ const MovieDescription = () => {
 
 
 
-    const { loading, error, data } = useQuery(query)
+    const { loading, error, data, refetch } = useQuery(query, {fetchPolicy: "cache-and-network" })
     console.log(data)
 
-
     useEffect(() => {
+        console.log(refreshFlag)
+        console.log("use effect hFlag")
         if(whichData === "Movie" && data) {
             console.log(data)
             if(typeof data.Movie != 'undefined'){
@@ -158,7 +160,11 @@ const MovieDescription = () => {
                 setMovie(fuckmovie)
             }
         }
-    }, [data, whichData, store.currentResultId])
+    }, [data, whichData, currentResultID])
+
+    useEffect(() => {
+        refetch()
+    },[refreshFlag])
 
     useEffect(() => {
         if(whichData === "Person" && data) {
@@ -176,22 +182,7 @@ const MovieDescription = () => {
                 setPerson(fuckperson)
             }
         }
-    }, [data, whichData, store.currentPersonId])
-    //
-    // const Reviews = () => {
-    //
-    //     let reviewHTMLlist = []
-    //     for(var i=0; i < movie.reviews.length; i++) {
-    //         reviewHTMLlist[i] =
-    //             <div className="reviews">
-    //                 <p>{movie.reviews[i].header}</p>
-    //                 <p>{movie.reviews[i].review}</p>
-    //                 <p>{movie.reviews[i].score}</p>
-    //                 <p>{movie.reviews[i].userId}</p>
-    //             </div>
-    //     }
-    //     return reviewHTMLlist
-    // }
+    }, [data, whichData, currentPersonID])
 
     if(whichData === "Movie" && currentResultID !== "177"){
         return (

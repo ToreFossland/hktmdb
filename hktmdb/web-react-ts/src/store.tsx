@@ -20,12 +20,20 @@ export function createStore() {
         
 
 
-
+         //Dummy Id
         currentResultId: "177",
         addCurrentResultId(item: string) {this.currentResultId = item},
         removeCurrentResultId(){this.currentResultId=""},
 
+         //Dummy title
+        currentResultTitle: " ",
+        addCurrentResultTitle(item: string) {this.currentResultTitle = item},
+        removeCurrentResultTitle(){this.currentResultTitle=""},
 
+        refreshFlag: false,
+        addRefreshFlag(item: boolean) {this.refreshFlag = item},
+        
+        //Dummy Id
         currentPersonId: "172",
         addCurrentPersonId(item: string) {this.currentPersonId = item},
         removeCurrentPersonId(){this.currentPersonId=""},

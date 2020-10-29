@@ -41,7 +41,7 @@ type Mutation {
     @cypher(
       statement:"""
       MATCH (n:MovieReview),(k:Movie) 
-      WHERE id(n) = $movieReviewId AND id(k) = $movieId 
+      WHERE apoc.node.id(n) = $movieReviewId AND apoc.node.id(k) = $movieId 
       CREATE (n)-[r:REVIEW_OF]->(k) 
       RETURN n"""
       )

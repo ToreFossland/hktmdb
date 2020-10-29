@@ -110,6 +110,7 @@ const SearchResults = () => {
     function showDataDetails(event: any) {
         if(whichData === "Movie"){
             store.addCurrentResultId(getDataElements()[event.target.value]._id)
+            store.addCurrentResultTitle(getDataElements()[event.target.value].title)
         }else{
             store.addCurrentPersonId(getDataElements()[event.target.value]._id)
         }
