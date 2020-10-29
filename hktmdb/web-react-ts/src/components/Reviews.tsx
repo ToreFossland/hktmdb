@@ -7,17 +7,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import getNewID from "./newId"
 
 
-interface Movie{
-    title: string,
-    released:  number,
-    tagline: String,
-    actors: string[],
-    directors: string[],
-    producers: string[],
-    writers: string[],
-    reviews: MovieReview
-}
-
 interface MovieReview {
     header: String,
     review: String,
@@ -26,12 +15,8 @@ interface MovieReview {
   }
 
 const Reviews = () => {
-    const [query, setQuery] = useState(gql`{
-        Movie{
-            title
-        }
-    }`);
-    const { loginWithRedirect, isAuthenticated, getAccessTokenSilently, user} = useAuth0();
+
+    const { isAuthenticated } = useAuth0();
     const store = useDataStore();
     let whichData = useObserver(() => (store.filterProps.get("dataFilterType")))
     let currentResultID = useObserver(() => store.currentResultId);
@@ -61,6 +46,7 @@ const Reviews = () => {
 
     const { loading, error, data, refetch} = useQuery(GET_RELATED_REVIEWS, {variables:{idMovie:currentResultID},fetchPolicy: "cache-and-network" })
 
+
     const [deleteComment] = useMutation(DELETE_COMMENT)
 
     useEffect(() => {
@@ -78,7 +64,7 @@ const Reviews = () => {
         return(<div></div>)
     }
     console.log(data)
-    if(isAuthenticated && whichData === "Movie" && data && currentResultID!=="177" && typeof data.Movie[0].reviews != 'undefined'){
+    if(isAuthenticated && data && typeof data.Movie[0].reviews != 'undefined'){
         return(
             <div>
                 <h2>Reviews:</h2>
@@ -98,8 +84,10 @@ const Reviews = () => {
         )
     }
     
+    
+    if (error) return <div><h1>Results:</h1><p>Login to see comments</p></div>
+    if (loading) return <div><h1>Results</h1><p>Fetching movies...</p></div>
     return (<div><p>Login to see comments</p></div>)
-
 }
 
 export default Reviews

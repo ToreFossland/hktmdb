@@ -1,4 +1,4 @@
-import { gql, useQuery, useMutation } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
@@ -24,12 +24,6 @@ interface Person{
     wrote: string[]
 }
 
-interface MovieReview {
-    header: String,
-    review: String,
-    score: number,
-    userId: String
-  }
 
 const MovieDescription = () => {
     //Initializing state, this gql query never runs

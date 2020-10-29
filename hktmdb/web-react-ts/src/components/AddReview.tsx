@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import { gql, useMutation} from '@apollo/client';
 import { useDataStore } from "../context";
 import { useObserver } from 'mobx-react-lite';
@@ -41,7 +41,6 @@ const AddMovie = () => {
             }
         }
     `;
-
 
 
     const [addMovieReview] = useMutation(ADD_MOVIE_REVIEW);
