@@ -64,7 +64,6 @@ const AddMovie = () => {
         return false;
     }
 
-
     return (
         <div>
             <form>

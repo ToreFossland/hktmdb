@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
@@ -63,7 +63,6 @@ const MovieDescription = () => {
     const [movie, setMovie] = useState(dummyMovie)
     const [person, setPerson] = useState(dummyPerson)
 
-
     const store = useDataStore();
     let whichData = useObserver(() => (store.filterProps.get("dataFilterType")))
     let currentResultID = useObserver(() => store.currentResultId);
@@ -71,8 +70,8 @@ const MovieDescription = () => {
     let refreshFlag = useObserver(() => store.refreshFlag);
 
     const GET_MOVIE_DETAILS = gql`
-        {
-            Movie(_id: ${currentResultID}){
+        query ($idMovie:ID!){
+            Movie(_id: $idMovie){
                 title
                 released
                 tagline
@@ -99,8 +98,8 @@ const MovieDescription = () => {
     `;
 
     const GET_PERSON_DETAILS = gql`
-        {
-            Person(_id: ${currentPersonID}){
+        query($idPerson:ID!){
+            Person(_id: $idPerson){
                 name
                 born
                 acted{
@@ -118,7 +117,18 @@ const MovieDescription = () => {
             }
         }
     `;
+    
+    const DELETE_COMMENT = gql`
+        mutation ($header:String!){
+            DeleteMovieReview(header:$header){
+                header
+            }
+        }
+    `;
 
+
+
+    const [deleteComment] = useMutation(DELETE_COMMENT);
 
 
     //Kan ikke flytte all koden inn i if setningen fordi useQuery ikke kan være inne i en conditional
@@ -130,9 +140,7 @@ const MovieDescription = () => {
         }
     }, [GET_MOVIE_DETAILS, GET_PERSON_DETAILS, whichData])
 
-
-
-    const { loading, error, data, refetch } = useQuery(query, {fetchPolicy: "cache-and-network" })
+    const { loading, error, data, refetch } = useQuery(query, {variables:{idMovie:currentResultID, idPerson:currentPersonID},fetchPolicy: "cache-and-network" })
     console.log(data)
 
     useEffect(() => {
@@ -165,6 +173,18 @@ const MovieDescription = () => {
     useEffect(() => {
         refetch()
     },[refreshFlag])
+
+    const test = (userId:String, header:String) => {
+        let currentUserId = localStorage.getItem("userID");
+        if(userId===currentUserId){
+            return (<button onClick={(e) => {
+                deleteComment({variables:{header:header}})
+                store.addRefreshFlag(!store.refreshFlag)
+            }}>Remove Comment</button>)
+        }
+        return(<div></div>)
+    }
+
 
     useEffect(() => {
         if(whichData === "Person" && data) {
@@ -200,7 +220,9 @@ const MovieDescription = () => {
                             <h1>{review.header}</h1>
                             <h1>{review.review}</h1>
                             <h1>{review.score}</h1>
-                            <h1>{review.userId}</h1>
+                            <div>
+                                {test(review.userId, review.header)}
+                            </div>
                         </div>
                     ))}
                 </div>
