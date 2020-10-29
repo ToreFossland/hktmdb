@@ -28,10 +28,8 @@ class App extends React.Component {
           <Login/>
           <LogOut/>
         </div>
-        <SearchHistory/>
         <div id="Search">
           <Search/><br></br>
-          <h1>Results:</h1>
           <SearchResults/>
         </div>
         <MovieDescription/>
