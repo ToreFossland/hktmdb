@@ -128,7 +128,7 @@ const MovieDescription = () => {
 
 
 
-    const [deleteComment] = useMutation(DELETE_COMMENT);
+    const [deleteComment] = useMutation(DELETE_COMMENT)
 
 
     //Kan ikke flytte all koden inn i if setningen fordi useQuery ikke kan være inne i en conditional
