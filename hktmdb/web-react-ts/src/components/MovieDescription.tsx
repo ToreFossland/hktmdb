@@ -177,10 +177,10 @@ const MovieDescription = () => {
     const test = (userId:String, header:String) => {
         let currentUserId = localStorage.getItem("userID");
         if(userId===currentUserId){
-            return (<button onClick={(e) => {
+            return (<button id="remove_button" onClick={(e) => {
                 deleteComment({variables:{header:header}})
                 store.addRefreshFlag(!store.refreshFlag)
-            }}>Remove Comment</button>)
+            }}>Remove</button>)
         }
         return(<div></div>)
     }
@@ -213,13 +213,13 @@ const MovieDescription = () => {
                     <ul>Actors in this movie: {movie.actors} </ul>
                     <ul>Directors in this movie:{movie.directors} </ul>
                     <ul>Producers of this movie: {movie.producers} </ul>
-                    <div>
+                    <h2>Reviews:</h2>
+                    <div className="reviews">
                     {movie.reviews.map((review: MovieReview, index) => (
                         <div>
-                            <h1>Review {index+1}</h1>
                             <h1>{review.header}</h1>
-                            <h1>{review.review}</h1>
-                            <h1>{review.score}</h1>
+                            <p>{review.review}</p>
+                            <p> Score: {review.score}</p>
                             <div>
                                 {test(review.userId, review.header)}
                             </div>
