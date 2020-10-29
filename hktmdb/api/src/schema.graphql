@@ -37,6 +37,14 @@ type MovieReview {
 }
 
 type Mutation {
+#    AddMovieReview(fromMovieReviewID: ID!, toMovieID: ID!): MovieReview @cypher(
+#        statement:"""
+#        MATCH (from:Person {id: $fromPersonID})
+#        MATCH (to:Bio {id: $toBioID})
+#        MERGE (from)-[:HAS_BIO]->(to)
+#        RETURN from.id, to.id
+#        """)
+
   addMovieReviewsRelation(movieReviewId: ID!, movieId: ID!): MovieReview 
     @cypher(
       statement:"""
@@ -46,4 +54,5 @@ type Mutation {
       RETURN n"""
       )
 }
+
 

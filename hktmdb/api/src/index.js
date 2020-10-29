@@ -89,7 +89,7 @@ app.listen({ host, port, path }, () => {
 CREATE (n:MovieReview {userId:'auth0|5f903d3f7539d1006893182f', header: 'haakon', review: 'Developer', score:'3' })
 CREATE (n:MovieReview {userId:'5f903d3f7539d1006893182f', header: 'haakon', review: 'Developer', score:'3' })
 
-MATCH (n:MovieReview), (k:Movie)
+MATCH (MovieReview)
 WHERE ID(MovieReview) = 175
 RETURN MovieReview
 
@@ -97,33 +97,12 @@ RETURN MovieReview
 //LAGE EN RELASJON MELLOM NODER
 MATCH (n:MovieReview),(k:Movie)
 WHERE  id(n) = 175 AND id(k) = 92
-CREATE (n)-[r:REVIEW_OF]->(k)
+CREATE (n)-[r:RELTYPE]->(k)
 RETURN type(r)
-
-
-//      """MATCH (n:MovieReview {_id: $movieReviewId}) MATCH (k:Movie {_id: $movieId}) MERGE (n)-[:IN_CATEGORY]->(k) RETURN n;")
 
 
 CREATE p = (Movie { ID:'92' })-[:Review]->(neo)<-[:WORKS_AT]-(michael { name: 'Michael' })
 RETURN p
-"funker i neo4j desktop
-//statement:"MATCH (n:MovieReview),(k:Movie) WHERE  id(n) = $movieReviewId AND id(k) = $movieId CREATE (n)-[r:REVIEW_OF]->(k) RETURN n"
-      )
-
-
-type Mutation {
-  addMovieReviewsRelation(movieReview: ID!, movieId: ID!): MovieReview 
-    @cypher(
-      statement:"""
-      MATCH (n:MovieReview),(k:Movie) 
-      WHERE id(n) = $movieReviewId AND id(k) = $movieId 
-      CREATE (n)-[r:REVIEW_OF]->(k) 
-      RETURN n"""
-      )
-}
-
 
 
 */
-
-

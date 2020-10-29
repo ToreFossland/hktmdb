@@ -2,7 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
-import '../index.css';
+import '../styling/search.css';
 
 
 interface Movie{
@@ -146,10 +146,10 @@ const MovieDescription = () => {
                     title: currentMovie.title,
                     released: currentMovie.released,
                     tagline: currentMovie.tagline,
-                    actors: currentMovie.persons.map((person: any) => person.name),
-                    directors: currentMovie.directors.map((person: any) => person.name),
-                    producers: currentMovie.producers.map((person: any) => person.name),
-                    writers: currentMovie.writers.map((person: any) => person.name),
+                    actors: currentMovie.persons.map((person: any) => <li>- {person.name}</li>),
+                    directors: currentMovie.directors.map((person: any) => <li>- {person.name}</li>),
+                    producers: currentMovie.producers.map((person: any) => <li>- {person.name}</li>),
+                    writers: currentMovie.writers.map((person: any) => <li>- {person.name}</li>),
                     reviews: currentMovie.reviews.map(function(review: any){
                         return {
                             header: review.header,
@@ -174,7 +174,7 @@ const MovieDescription = () => {
                 const fuckperson: Person = {
                     name: currentPerson.name,
                     born:  currentPerson.born,
-                    acted: currentPerson.acted.map((movie:any) => movie.title),
+                    acted: currentPerson.acted.map((movie:any) =><li> - {movie.title}</li>),
                     directed: currentPerson.directed,
                     produced: currentPerson.produced,
                     wrote: currentPerson.wrote
@@ -187,11 +187,13 @@ const MovieDescription = () => {
     if(whichData === "Movie" && currentResultID !== "177"){
         return (
             <div>
-                <h1> {movie.title} </h1>
-                <ul> {movie.actors} </ul>
-                <ul> {movie.directors} </ul>
-                <ul> {movie.producers} </ul>
-                <div>
+                <div id="data_details">
+                    <h1> {movie.title} ({movie.released}) </h1>
+                    <h6> "{movie.tagline}"</h6>
+                    <ul>Actors in this movie: {movie.actors} </ul>
+                    <ul>Directors in this movie:{movie.directors} </ul>
+                    <ul>Producers of this movie: {movie.producers} </ul>
+                    <div>
                     {movie.reviews.map((review: MovieReview, index) => (
                         <div>
                             <h1>Review {index+1}</h1>
@@ -202,14 +204,17 @@ const MovieDescription = () => {
                         </div>
                     ))}
                 </div>
+                </div>
             </div>
         );
     }else if(whichData === "Person" && currentPersonID !== "172") {
         return (
             <div>
-                <h1>{person.name}</h1>
-                <h1>Born: {person.born}</h1>
-                <ul>{person.acted}</ul>
+                <div id="data_details">
+                    <h1>{person.name}</h1>
+                    <h6>Born: {person.born}</h6>
+                    <ul>Acted in movies:{person.acted}</ul>
+                </div>
             </div>
         )
 
