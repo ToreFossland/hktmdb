@@ -72,7 +72,7 @@ const AddMovie = () => {
                         <p>Review Title</p>
                         <input type="text" onChange={e => setHeader(e.target.value)} required/><br></br>
                         <p>Text:</p>
-                        <input type="text" onChange={e => setReviewText(e.target.value)} required/><br></br>
+                        <textarea  onChange={e => setReviewText(e.target.value)} required/><br></br>
                         <p>Score (1-10): <input type="number" min="1" max="10" onChange={e => setScore(e.target.value)} required/><br></br></p>
                         
                         <button onClick={(e) => {submitReviewHandler(e)}}> Submit Review</button>
