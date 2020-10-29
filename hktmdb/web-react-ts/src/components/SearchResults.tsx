@@ -149,7 +149,7 @@ const SearchResults = () => {
     var moreResults = function(input: number) {
         if(input === dataCount) {
 
-            return <button id="showMoreButton" onClick={ () => {setDataCount(dataCount+5); fetch(input)}}>Show more</button>
+            return <button id="showMoreButton" onClick={ () => {setDataCount(dataCount+5); fetch(input)}}><img src={require("../resources/expand_more-big.svg")}/></button>
             
         }
     }
