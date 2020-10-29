@@ -66,8 +66,8 @@ const SearchYear = () => {
         <div>
             <p> Filter between years: </p>
             <div>
-                <input placeholder="1920" type="number" min="0" max="2020" onChange={handleChange1}/>-
-                <input placeholder="2020" type="number" min="0" max="2020" onChange={handleChange2}/>
+                <input style={{height: 25}} placeholder="1920" type="number" min="0" max="2020" onChange={handleChange1}/>-
+                <input style={{height: 25}} placeholder="2020" type="number" min="0" max="2020" onChange={handleChange2}/>
             </div>
         </div>
     );
