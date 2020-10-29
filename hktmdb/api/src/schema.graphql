@@ -18,7 +18,6 @@ type Person {
   directed: [Movie] @relation (name:"DIRECTED", direction:"OUT")
   produced: [Movie] @relation (name:"PRODUCED", direction:"OUT")
   wrote: [Movie] @relation (name:"WROTE", direction:"OUT")
-  reviews: [MovieReview] @relation (name:"REVIEW_OF", direction:"OUT")
 }
 
 type SearchHistory @isAuthenticated {
@@ -34,8 +33,17 @@ type MovieReview {
   review: String
   score: Int
   userId: String
+  movie: Movie @relation(name: "REVIEW_OF", direction: "OUT")
 }
 
-
-
+type Mutation {
+  addMovieReviewsRelation(movieReviewId: ID!, movieId: ID!): MovieReview 
+    @cypher(
+      statement:"""
+      MATCH (n:MovieReview),(k:Movie) 
+      WHERE id(n) = $movieReviewId AND id(k) = $movieId 
+      CREATE (n)-[r:REVIEW_OF]->(k) 
+      RETURN n"""
+      )
+}
 
