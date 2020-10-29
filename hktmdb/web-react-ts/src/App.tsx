@@ -6,6 +6,7 @@ import Login from './components/Login';
 import LogOut from './components/LogOut';
 import MovieDescription from './components/MovieDescription'
 import AddReview from './components/AddReview'
+import Reviews from './components/Reviews'
 import AddMovie from './components/AddMovie';
 import {useLocalStore, useObserver} from "mobx-react";
 import { DataStoreProvider } from './context'
@@ -33,6 +34,7 @@ class App extends React.Component {
           <SearchResults/>
         </div>
         <MovieDescription/>
+        <Reviews/>
         <AddReview/>
       </div>
       </DataStoreProvider>

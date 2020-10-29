@@ -2,8 +2,8 @@ import { gql, useQuery, useMutation } from '@apollo/client';
 import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
-import '../styling/moviedescription_review.css';
-
+import '../styling/search.css';
+import getNewID from "./newId"
 
 interface Movie{
     title: string,
@@ -13,7 +13,6 @@ interface Movie{
     directors: string[],
     producers: string[],
     writers: string[],
-    reviews: MovieReview[]
 }
 
 interface Person{
@@ -41,14 +40,13 @@ const MovieDescription = () => {
     }`);
 
     const dummyMovie : Movie = {
-        title: "fuck you",
+        title: "Something is wrong",
         released:  1,
         tagline: "",
         actors: [],
         directors: [],
         producers: [],
         writers: [],
-        reviews: []
     };
 
     const dummyPerson : Person = {
@@ -67,7 +65,6 @@ const MovieDescription = () => {
     let whichData = useObserver(() => (store.filterProps.get("dataFilterType")))
     let currentResultID = useObserver(() => store.currentResultId);
     let currentPersonID = useObserver(() => store.currentPersonId);
-    let refreshFlag = useObserver(() => store.refreshFlag);
 
     const GET_MOVIE_DETAILS = gql`
         query ($idMovie:ID!){
@@ -86,12 +83,6 @@ const MovieDescription = () => {
                 }
                 writers{
                     name
-                }
-                reviews{
-                    header
-                    review
-                    score
-                    userId
                 }
             }
         }
@@ -118,17 +109,6 @@ const MovieDescription = () => {
         }
     `;
     
-    const DELETE_COMMENT = gql`
-        mutation ($header:String!){
-            DeleteMovieReview(header:$header){
-                header
-            }
-        }
-    `;
-
-
-
-    const [deleteComment] = useMutation(DELETE_COMMENT);
 
 
     //Kan ikke flytte all koden inn i if setningen fordi useQuery ikke kan være inne i en conditional
@@ -140,66 +120,41 @@ const MovieDescription = () => {
         }
     }, [GET_MOVIE_DETAILS, GET_PERSON_DETAILS, whichData])
 
-    const { loading, error, data, refetch } = useQuery(query, {variables:{idMovie:currentResultID, idPerson:currentPersonID},fetchPolicy: "cache-and-network" })
+    const { loading, error, data} = useQuery(query, {variables:{idMovie:currentResultID, idPerson:currentPersonID},fetchPolicy: "cache-and-network" })
     console.log(data)
 
     useEffect(() => {
-        console.log(refreshFlag)
-        console.log("use effect hFlag")
         if(whichData === "Movie" && data) {
-            console.log(data)
             if(typeof data.Movie != 'undefined'){
                 let currentMovie = data.Movie[0]
-                const fuckmovie: Movie = {
+                const results: Movie = {
                     title: currentMovie.title,
                     released: currentMovie.released,
                     tagline: currentMovie.tagline,
-                    actors: currentMovie.persons.map((person: any) => <li>- {person.name}</li>),
-                    directors: currentMovie.directors.map((person: any) => <li>- {person.name}</li>),
-                    producers: currentMovie.producers.map((person: any) => <li>- {person.name}</li>),
-                    writers: currentMovie.writers.map((person: any) => <li>- {person.name}</li>),
-                    reviews: currentMovie.reviews.map(function(review: any){
-                        return {
-                            header: review.header,
-                            review: review.review,
-                            score: review.score,
-                            userId: review.userId}})
+                    actors: currentMovie.persons.map((person: any) => <li key={getNewID()}>- {person.name}</li>),
+                    directors: currentMovie.directors.map((person: any) => <li key={getNewID()} >- {person.name}</li>),
+                    producers: currentMovie.producers.map((person: any) => <li key={getNewID()}>- {person.name}</li>),
+                    writers: currentMovie.writers.map((person: any) => <li key={getNewID()}>- {person.name}</li>),
                 }
-                setMovie(fuckmovie)
+                setMovie(results)
             }
         }
     }, [data, whichData, currentResultID])
-
-    useEffect(() => {
-        refetch()
-    },[refreshFlag])
-
-    const test = (userId:String, header:String) => {
-        let currentUserId = localStorage.getItem("userID");
-        if(userId===currentUserId){
-            return (<button id="remove_button" onClick={(e) => {
-                deleteComment({variables:{header:header}})
-                store.addRefreshFlag(!store.refreshFlag)
-            }}>Remove</button>)
-        }
-        return(<div></div>)
-    }
-
 
     useEffect(() => {
         if(whichData === "Person" && data) {
             console.log(data)
             if(typeof data.Person != 'undefined'){
                 let currentPerson = data.Person[0]
-                const fuckperson: Person = {
+                const results: Person = {
                     name: currentPerson.name,
                     born:  currentPerson.born,
-                    acted: currentPerson.acted.map((movie:any) =><li> - {movie.title}</li>),
+                    acted: currentPerson.acted.map((movie:any) =><li key={getNewID()}> - {movie.title}</li>),
                     directed: currentPerson.directed,
                     produced: currentPerson.produced,
                     wrote: currentPerson.wrote
                 }
-                setPerson(fuckperson)
+                setPerson(results)
             }
         }
     }, [data, whichData, currentPersonID])
@@ -213,19 +168,6 @@ const MovieDescription = () => {
                     <ul>Actors in this movie: {movie.actors} </ul>
                     <ul>Directors in this movie:{movie.directors} </ul>
                     <ul>Producers of this movie: {movie.producers} </ul>
-                    <h2>Reviews:</h2>
-                    <div className="reviews">
-                    {movie.reviews.map((review: MovieReview, index) => (
-                        <div>
-                            <h1>{review.header}</h1>
-                            <p>{review.review}</p>
-                            <p> Score: {review.score}</p>
-                            <div>
-                                {test(review.userId, review.header)}
-                            </div>
-                        </div>
-                    ))}
-                </div>
                 </div>
             </div>
         );
