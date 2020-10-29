@@ -1,11 +1,11 @@
 import React from 'react'
-import MobxExample from './components/MobxExample';
 import Search from './components/Search';
 import SearchResults from './components/SearchResults';
 import SearchHistory from './components/SearchHistory';
 import Login from './components/Login';
 import LogOut from './components/LogOut';
 import MovieDescription from './components/MovieDescription'
+import AddReview from './components/AddReview'
 import AddMovie from './components/AddMovie';
 import {useLocalStore, useObserver} from "mobx-react";
 import { DataStoreProvider } from './context'
@@ -35,6 +35,7 @@ class App extends React.Component {
           <SearchResults/>
         </div>
         <MovieDescription/>
+        <AddReview/>
       </div>
       </DataStoreProvider>
     )

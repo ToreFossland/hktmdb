@@ -12,7 +12,8 @@ interface Movie{
     actors: string[],
     directors: string[],
     producers: string[],
-    writers: string[]
+    writers: string[],
+    reviews: MovieReview[]
 }
 
 interface Person{
@@ -23,6 +24,13 @@ interface Person{
     produced: string[],
     wrote: string[]
 }
+
+interface MovieReview {
+    header: String,
+    review: String,
+    score: number,
+    userId: String
+  }
 
 const MovieDescription = () => {
     //Initializing state, this gql query never runs
@@ -39,7 +47,8 @@ const MovieDescription = () => {
         actors: [],
         directors: [],
         producers: [],
-        writers: []
+        writers: [],
+        reviews: []
     };
 
     const dummyPerson : Person = {
@@ -77,6 +86,12 @@ const MovieDescription = () => {
                 }
                 writers{
                     name
+                }
+                reviews{
+                    header
+                    review
+                    score
+                    userId
                 }
             }
         }
@@ -132,7 +147,13 @@ const MovieDescription = () => {
                     actors: currentMovie.persons.map((person: any) => <li>- {person.name}</li>),
                     directors: currentMovie.directors.map((person: any) => <li>- {person.name}</li>),
                     producers: currentMovie.producers.map((person: any) => <li>- {person.name}</li>),
-                    writers: currentMovie.writers.map((person: any) => <li>- {person.name}</li>)
+                    writers: currentMovie.writers.map((person: any) => <li>- {person.name}</li>),
+                    reviews: currentMovie.reviews.map(function(review: any){
+                        return {
+                            header: review.header,
+                            review: review.review,
+                            score: review.score,
+                            userId: review.userId}})
                 }
                 setMovie(fuckmovie)
             }
@@ -156,10 +177,23 @@ const MovieDescription = () => {
             }
         }
     }, [data, whichData, store.currentPersonId])
+    //
+    // const Reviews = () => {
+    //
+    //     let reviewHTMLlist = []
+    //     for(var i=0; i < movie.reviews.length; i++) {
+    //         reviewHTMLlist[i] =
+    //             <div className="reviews">
+    //                 <p>{movie.reviews[i].header}</p>
+    //                 <p>{movie.reviews[i].review}</p>
+    //                 <p>{movie.reviews[i].score}</p>
+    //                 <p>{movie.reviews[i].userId}</p>
+    //             </div>
+    //     }
+    //     return reviewHTMLlist
+    // }
 
-
-
-    if(whichData === "Movie" && currentResultID != "177"){
+    if(whichData === "Movie" && currentResultID !== "177"){
         return (
             <div>
                 <div id="data_details">
@@ -168,10 +202,21 @@ const MovieDescription = () => {
                     <ul>Actors in this movie: {movie.actors} </ul>
                     <ul>Directors in this movie:{movie.directors} </ul>
                     <ul>Producers of this movie: {movie.producers} </ul>
+                    <div>
+                    {movie.reviews.map((review: MovieReview, index) => (
+                        <div>
+                            <h1>Review {index+1}</h1>
+                            <h1>{review.header}</h1>
+                            <h1>{review.review}</h1>
+                            <h1>{review.score}</h1>
+                            <h1>{review.userId}</h1>
+                        </div>
+                    ))}
+                </div>
                 </div>
             </div>
         );
-    }else if(whichData === "Person" && currentPersonID != "172") {
+    }else if(whichData === "Person" && currentPersonID !== "172") {
         return (
             <div>
                 <div id="data_details">
