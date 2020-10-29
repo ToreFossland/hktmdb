@@ -1,12 +1,18 @@
 /*Hele containeren*/
+@font-face {
+  font-family: "Interstate";
+  src: url("../resources/Interstate ExtraLight Regular.otf");
+}
+
 body {
-  font-family: "arial";
+  font-family: "Interstate";
+  font-weight: bold;
 }
 
 #grid-container {
     display: grid;
     grid-template-columns: 1;
-    background-color: #444;
+    background-color: #424143;
     grid-row-gap:50px;
     padding: 10px;
   }
@@ -16,12 +22,17 @@ body {
  #grid-container > * {
     max-width: 1000px;
     width: 80vw;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: #9E9D9F;
     border: 1px solid rgba(0, 0, 0, 0.8);
     font-size: 30px;
     text-align: center;
     margin: auto;
-    padding: 20px;
+    box-shadow: 0 0 5px #000;
+  }
+
+  #grid-container > *:not(:first-child) {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 
   #grid-container > *:first-child {

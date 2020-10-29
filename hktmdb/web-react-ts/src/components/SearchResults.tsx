@@ -76,8 +76,8 @@ const SearchResults = () => {
         },
         fetchPolicy: "cache-and-network"
     });
-    if (error) return <p>Error</p>
-    if (loading) return <p>Fetching movies...</p>
+    if (error) return <div><h1>Results:</h1><p>Error</p></div>
+    if (loading) return <div><h1>Results</h1><p>Fetching movies...</p></div>
 
     const getDataElements = function() {
         let dataElements;
@@ -157,6 +157,7 @@ const SearchResults = () => {
 
     return (
         <div>
+            <h1>Results</h1>
             <ul className="moviediv">{moviedivs} {persondivs}</ul>
             {moreResults(getDataElements().length)}
         </div>

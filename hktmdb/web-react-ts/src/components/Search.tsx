@@ -17,7 +17,10 @@ const SearchInput = () => {
     return (
         <div>
             <form>
-                <input id="search_input" placeholder="Search" type="text" onChange={handleChange}/>
+                <div id="search_input">
+                    <img style={{verticalAlign:-7, opacity: 0.8}}  src={require("../resources/search.svg")}/>
+                    <input style={{outline: "none", border: "none", width: 225, height:35, backgroundColor: "#ddd", fontSize: 20}} type="text" onChange={handleChange}/>
+                </div>
             </form>
         </div>
     );
@@ -102,15 +105,18 @@ const SearchType = () => {
     const store = useDataStore();
 
     const [type, setType] = useState("Movie");
+    const [img, setImg] = useState("movie.svg");
 
     const handleChange = () => {
         if(type == "Movie") {
             setType("Person");
+            setImg("person.svg");
             store.addFilterProps("dataFilterType", "Person");
         }
 
         else {
             setType("Movie");
+            setImg("movie.svg");
             store.addFilterProps("dataFilterType", "Movie");
         }
     }
@@ -118,7 +124,7 @@ const SearchType = () => {
     
     return (
         <div>
-            <p>Searching for: <button id="search_type" onClick={handleChange}>{type}</button></p>
+            <p>Searching for: <button id="search_type" onClick={handleChange}><img style={{verticalAlign:-7, opacity: 0.8}} src={require("../resources/"+img)}/>{type}</button></p>
         </div>
     );
     }
@@ -129,13 +135,16 @@ const SearchType = () => {
 export default function Search() {
 
     const [filterShow, setFilterShow] = useState("none");
+    const [img, setImg] = useState("more.svg")
     const showFilterOptions = () => {
         if(filterShow == "none") {
             setFilterShow("block");
+            setImg("less.svg");
         }
 
         else {
             setFilterShow("none");
+            setImg("more.svg");
         }
 }
     return(
@@ -145,7 +154,7 @@ export default function Search() {
                 <SearchType/>
             </div>
             
-            <button id="buttonShowFilter" onClick={() => showFilterOptions()}>Filter options:<img style={{verticalAlign:-7}} src={require("../resources/expand_more-24px.svg")}/></button>
+            <button id="buttonShowFilter" onClick={() => showFilterOptions()}>Filter options:<img style={{verticalAlign:-7}} src={require("../resources/expand_"+img)}/></button>
             <div style={{display: filterShow}} id="filter_container">
                 <SearchSort/>
                 <SearchYear/>
