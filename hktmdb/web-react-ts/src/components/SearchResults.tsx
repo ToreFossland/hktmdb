@@ -96,13 +96,13 @@ const SearchResults = () => {
     const moviedivs = [];
     if(whichData == "Movie") {
         for(var i=0; i < getDataElements().length; i++) {
-            moviedivs[i] = <li key={getDataElements()[i]._id} value={i} onClick={(event) => showDataDetails(event)}>{getDataElements()[i].title}({getDataElements()[i].released}) </li>
+            moviedivs[i] = <li key={getDataElements()[i]._id} value={i} onClick={(event) => showDataDetails(event)}>{getDataElements()[i].title} ({getDataElements()[i].released}) </li>
         }
     }
     const persondivs = [];
     if(whichData == "Person") {
         for(var j=0; j < getDataElements().length; j++) {
-            persondivs[j] = <li key={getDataElements()[j]._id} value={j} onClick={(event) => showDataDetails(event)}>{getDataElements()[j].name}({getDataElements()[j].born}) </li>
+            persondivs[j] = <li key={getDataElements()[j]._id} value={j} onClick={(event) => showDataDetails(event)}>{getDataElements()[j].name} ({getDataElements()[j].born}) </li>
         }
     }
     
