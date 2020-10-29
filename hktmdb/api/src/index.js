@@ -101,8 +101,29 @@ CREATE (n)-[r:REVIEW_OF]->(k)
 RETURN type(r)
 
 
+//      """MATCH (n:MovieReview {_id: $movieReviewId}) MATCH (k:Movie {_id: $movieId}) MERGE (n)-[:IN_CATEGORY]->(k) RETURN n;")
+
+
 CREATE p = (Movie { ID:'92' })-[:Review]->(neo)<-[:WORKS_AT]-(michael { name: 'Michael' })
 RETURN p
+"funker i neo4j desktop
+//statement:"MATCH (n:MovieReview),(k:Movie) WHERE  id(n) = $movieReviewId AND id(k) = $movieId CREATE (n)-[r:REVIEW_OF]->(k) RETURN n"
+      )
+
+
+type Mutation {
+  addMovieReviewsRelation(movieReview: ID!, movieId: ID!): MovieReview 
+    @cypher(
+      statement:"""
+      MATCH (n:MovieReview),(k:Movie) 
+      WHERE id(n) = $movieReviewId AND id(k) = $movieId 
+      CREATE (n)-[r:REVIEW_OF]->(k) 
+      RETURN n"""
+      )
+}
+
 
 
 */
+
+
