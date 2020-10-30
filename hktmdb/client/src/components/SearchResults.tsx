@@ -80,12 +80,12 @@ const SearchResults = () => {
         ,
         fetchPolicy: "cache-and-network"
     });
-    if (error) return <div><p>Error</p></div>
-    if (loading) return <div><p>Fetching movies...</p></div>
+    if (error) return <div><h1>Results:</h1><p>Error</p></div>
+    if (loading) return <div><h1>Results</h1><p>Fetching movies...</p></div>
 
     const getDataElements = function() {
         let dataElements;
-        if(whichData == "Movie"){
+        if(whichData === "Movie"){
             dataElements = data.Movie.map((movie: any) => movie);
         }
 
@@ -98,13 +98,13 @@ const SearchResults = () => {
     
     
     const moviedivs = [];
-    if(whichData == "Movie") {
+    if(whichData === "Movie") {
         for(var i=0; i < getDataElements().length; i++) {
             moviedivs[i] = <li key={getDataElements()[i]._id} value={i} onClick={(event) => showDataDetails(event)}>{getDataElements()[i].title} ({getDataElements()[i].released}) </li>
         }
     }
     const persondivs = [];
-    if(whichData == "Person") {
+    if(whichData === "Person") {
         for(var j=0; j < getDataElements().length; j++) {
             persondivs[j] = <li key={getDataElements()[j]._id} value={j} onClick={(event) => showDataDetails(event)}>{getDataElements()[j].name} ({getDataElements()[j].born}) </li>
         }
@@ -159,7 +159,7 @@ const SearchResults = () => {
     var moreResults = function(input: number) {
         if(input === dataCount) {
 
-            return <button id="showMoreButton" onClick={ () => {setDataCount(dataCount+5); fetch(input)}}><img src={require("../resources/expand_more-big.svg")}/></button>
+            return <button id="showMoreButton" onClick={ () => {setDataCount(dataCount+5); fetch(input)}}><img alt="showmore" src={require("../resources/expand_more-big.svg")}/></button>
             
         }
     }
@@ -167,6 +167,7 @@ const SearchResults = () => {
 
     return (
         <div id="SearchResults">
+            <h1>Results</h1>
             <ul className="moviediv">{moviedivs} {persondivs}</ul>
             {moreResults(getDataElements().length)}
         </div>

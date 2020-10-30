@@ -9,7 +9,7 @@ _Object$defineProperty(exports, "__esModule", {
 exports.initializeDatabase = void 0;
 
 const initializeDatabase = driver => {
-  const initCypher = `CALL apoc.schema.assert({}, {Movie: ["_id"], Person: ["_id"], MovieReview: ["_id"])`;
+  const initCypher = `CALL apoc.schema.assert({}, {Movie: ["_id"], Person: ["_id"], MovieReview: ["_id"]})`;
 
   const executeQuery = driver => {
     const session = driver.session();
