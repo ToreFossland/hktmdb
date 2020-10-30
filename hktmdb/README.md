@@ -4,7 +4,7 @@
 
 Når alt er installert, åpne et terminalvindu i hktmdb > server og skriv `npm run start`.
 
-Åpne så enda et terminalvindu i hktmdb > client og skriv `npm run start`, her også.
+Åpne så enda et terminalvindu (uten å lukke det forrige) i hktmdb > client og skriv `npm run start`, her også.
 
 
 # **Prosjekt 3 - Dokumentasjon**
