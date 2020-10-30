@@ -44,6 +44,19 @@ const AddMovie = () => {
         }
     `;
 
+    const handleScore = (input:string) => {
+        if(parseInt(input) > 10) {
+            setScore("10");
+        }
+
+        else if (parseInt(input) < 1) {
+            setScore("1");
+        }
+
+        else {
+            setScore(input);
+        }
+    }
 
     const [addMovieReview] = useMutation(ADD_MOVIE_REVIEW);
     const [addRelation] = useMutation(ADD_MOVIE_RELATION);
@@ -74,7 +87,7 @@ const AddMovie = () => {
                         <input type="text" onChange={e => setHeader(e.target.value)} required/><br></br>
                         <p>Text:</p>
                         <textarea  onChange={e => setReviewText(e.target.value)} required/><br></br>
-                        <p>Score (1-10): <input type="number" min="1" max="10" onChange={e => setScore(e.target.value)} required/><br></br></p>
+                        <p>Score (1-10): <input type="number" min="1" max="10" onChange={e => handleScore(e.target.value)} required/><br></br></p>
                         
                         <button onClick={(e) => {submitReviewHandler(e)}}> Submit Review</button>
                     </form>
