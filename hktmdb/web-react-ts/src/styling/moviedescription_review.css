@@ -4,7 +4,7 @@
     border-radius: 25px;
     background-color: #eee;
     max-width: 500px;
-    width: 80vw;
+    width: 80%;
     box-shadow: inset 0 0 5px 1px #000;
     max-width: 500px;
 }
@@ -64,7 +64,7 @@
     border-radius: 15px;
     background-color: #eee;
     max-width: 300px;
-    width: 80vw;
+    width: 80%;
     box-shadow: inset 0 0 3px 1px #000;
 }
 #add_review > form > input {
