@@ -50,8 +50,10 @@ Valget av komponent for state management ble MobX. Etter å ha lest om både Mob
 Andre tredjeparts komponenter vi valgte å ta i bruk var Auth0. Denne komponenten lot oss lage autoriserte brukere, som vi så kunne logge inn med og legge inn data i databasen basert på et access Token. Slik fikk vi implementert funksjonalitet som lar enkelt brukere legge inn og eventuelt slette data unik for deres token. Dette ble reviews for filmer i databasen, som vil igjen vises for andre, men kan kun slettes av de som har laget reviewet. Å implementere denne komponenten tok mye tid og var vanskelig.
 
 
-#### **Cypress**
+#### **Cypress e2e**
 Før testing start server. Vi benyttet Cypress til e2e testing. Cypress er et neste-generasjons klientside verktøy som adresserer problem som synkronisering og ustabile tester pga. element som ikke vises osv. Testene finner man under /client/cypress/integration/. Cypress tester er raske å skrive og kan utrykkes med få linjer kode. Vi tester mye funksjonalitet på siden. Eksempelvis å søke opp filmer samt sjekke resultater, tilsvarende for personer og om filtreringen funker som den skal. Filmvurderingene blir ikke testet fordi det krever innlogging via. Auth0. Ref Cypress:
 Best Practice: Only test what you control. Try to avoid requiring a 3rd party server. When necessary, always use cy.request() to talk to 3rd party servers via their APIs.
 Prøvde å sette opp automatisk innlogging ved hjelp av en HTTP request som oppgitt, men dette funket ikke for oss. Pga. tidsbegrensinger valgte vi å ikke fokusere på dette.
+
+#### **React Testing Library**
 Unit testingen ble gjort ved å bruke react testing library. Dette tilstreber at komponentene testes som en bruker ville ha brukt den. I tillegg er det veldig kjekt at det allerede er installert med create-react-app.
