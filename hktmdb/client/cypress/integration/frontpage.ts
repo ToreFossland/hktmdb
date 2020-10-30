@@ -71,6 +71,7 @@ describe('Test if MovieDescription has right output', () => {
 
         cy.react('SearchInput').type("The Matrix")
         cy.react('SearchResults').click(500, 60)
+        cy.waitForReact(3000, '#root');
         cy.react('MovieDescription').find('h6').contains('Welcome to the Real World')
         cy.react('MovieDescription').find('ul').contains('Keanu Reeves')
     })
