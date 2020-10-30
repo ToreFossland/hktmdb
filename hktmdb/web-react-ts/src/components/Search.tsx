@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
 import { useDataStore } from "../context";
 import '../styling/search.css';
 import '../styling/general.css';
@@ -18,7 +17,7 @@ const SearchInput = () => {
         <div>
             <form>
                 <div id="search_input">
-                    <img style={{verticalAlign:-7, opacity: 0.8}}  src={require("../resources/search.svg")}/>
+                    <img alt="pic" style={{verticalAlign:-7, opacity: 0.8}}  src={require("../resources/search.svg")}/>
                     <input type="text" onChange={handleChange}/>
                 </div>
             </form>
@@ -82,11 +81,11 @@ const SearchSort = () => {
         let value = event.target.value;
         store.addFilterProps("movieFilterType", value);
 
-        if(value == "title") {
+        if(value === "title") {
             store.addFilterProps("personFilterType", "name");
         }
 
-        if(value == "released") {
+        if(value === "released") {
             store.addFilterProps("personFilterType", "born");
         }
     }
@@ -108,7 +107,7 @@ const SearchType = () => {
     const [img, setImg] = useState("movie.svg");
 
     const handleChange = () => {
-        if(type == "Movie") {
+        if(type === "Movie") {
             setType("Person");
             setImg("person.svg");
             store.addFilterProps("dataFilterType", "Person");
@@ -124,7 +123,7 @@ const SearchType = () => {
     
     return (
         <div>
-            <p>Searching for: <button id="search_type" onClick={handleChange}><img style={{verticalAlign:-7, opacity: 0.8}} src={require("../resources/"+img)}/>{type}</button></p>
+            <p>Searching for: <button id="search_type" onClick={handleChange}><img alt="pic" style={{verticalAlign:-7, opacity: 0.8}} src={require("../resources/"+img)}/>{type}</button></p>
         </div>
     );
     }
@@ -137,7 +136,7 @@ export default function Search() {
     const [filterShow, setFilterShow] = useState("none");
     const [img, setImg] = useState("more.svg")
     const showFilterOptions = () => {
-        if(filterShow == "none") {
+        if(filterShow === "none") {
             setFilterShow("block");
             setImg("less.svg");
         }
@@ -154,7 +153,7 @@ export default function Search() {
                 <SearchType/>
             </div>
             
-            <button id="buttonShowFilter" onClick={() => showFilterOptions()}>Filter options:<img style={{verticalAlign:-7}} src={require("../resources/expand_"+img)}/></button>
+            <button id="buttonShowFilter" onClick={() => showFilterOptions()}>Filter options:<img alt="pic" style={{verticalAlign:-7}} src={require("../resources/expand_"+img)}/></button>
             <div style={{display: filterShow}} id="filter_container">
                 <SearchSort/>
                 <SearchYear/>

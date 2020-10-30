@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { gql, useMutation} from '@apollo/client';
 import { useDataStore } from "../context";
-import { useObserver } from 'mobx-react-lite';
+import { useObserver } from 'mobx-react';
 import {getNewID2} from "./newId"
 
 
@@ -72,7 +72,7 @@ const AddMovie = () => {
         store.addRefreshFlag(!store.refreshFlag)
     }
 
-    if (currentResultID != "177" && whichData === "Movie"){
+    if (currentResultID !== "177" && whichData === "Movie"){
         return (
             <div> 
                 <div id="add_review">

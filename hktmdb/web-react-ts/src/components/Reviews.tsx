@@ -1,6 +1,6 @@
 import { gql, useQuery, useMutation } from '@apollo/client';
-import { useObserver } from 'mobx-react-lite';
-import React, {useEffect, useState} from 'react';
+import { useObserver } from 'mobx-react';
+import React, {useEffect} from 'react';
 import { useDataStore } from "../context";
 import '../styling/search.css';
 import { useAuth0 } from "@auth0/auth0-react";
