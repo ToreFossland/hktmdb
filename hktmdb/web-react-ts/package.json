@@ -47,7 +47,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
-    "postinstall": "(cd server && npm install); (cd klient && npm install)"
+    "postinstall": "(cd api && npm install); (cd web-react-ts && npm install)"
   },
   "eslintConfig": {
     "extends": "react-app"
