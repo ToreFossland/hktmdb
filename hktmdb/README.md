@@ -7,6 +7,11 @@ Når alt er installert, åpne et terminalvindu i hktmdb > server og skriv `npm r
 Åpne så enda et terminalvindu (uten å lukke det forrige) i hktmdb > client og skriv `npm run start`, her også.
 
 
+# Hvordan kjøre tester
+Åpne terminalvindu, gå inn i hktmdb > client og skriv `npm run cypress:open`. for e2e testing.
+Åpne terminalvindu, gå inn i hktmdb > client og skriv `npm run test`. for unit testing.
+
+
 # **Prosjekt 3 - Dokumentasjon**
 
 
