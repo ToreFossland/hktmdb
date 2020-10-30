@@ -73,7 +73,7 @@ const Reviews = () => {
     }
     if(whichData !== "Movie"){return(<div></div>)}
 
-    if (!isAuthenticated) return <div><p>login to see comments:</p><Login/></div>
+    if (!isAuthenticated) return <div><p>Login to see comments.</p></div>
     
     if (error) return <div><p>error</p></div>
     if (loading) return <div><p>Fetching movies...</p></div>
