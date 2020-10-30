@@ -28,6 +28,7 @@ type SearchHistory @isAuthenticated {
 
 type MovieReview @isAuthenticated{
   _id: ID!
+  id: ID!
   header: String
   review: String
   score: Int

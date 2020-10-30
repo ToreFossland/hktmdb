@@ -3,7 +3,7 @@ import { useObserver } from 'mobx-react-lite';
 import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
 import '../styling/search.css';
-import getNewID from "./newId"
+import {getNewID} from "./newId"
 
 interface Movie{
     title: string,
@@ -33,27 +33,9 @@ const MovieDescription = () => {
         }
     }`);
 
-    const dummyMovie : Movie = {
-        title: "Something is wrong",
-        released:  1,
-        tagline: "",
-        actors: [],
-        directors: [],
-        producers: [],
-        writers: [],
-    };
-
-    const dummyPerson : Person = {
-        name: "",
-        born:  1,
-        acted: [],
-        directed: [],
-        produced: [],
-        wrote: []
-    }
-    //Dummy data for the hooks before actual data is ready to be shown
-    const [movie, setMovie] = useState(dummyMovie)
-    const [person, setPerson] = useState(dummyPerson)
+//data for the hooks before actual data is ready to be shown
+    const [movie, setMovie] = useState<Movie>()
+    const [person, setPerson] = useState<Person>()
 
     const store = useDataStore();
     let whichData = useObserver(() => (store.filterProps.get("dataFilterType")))
@@ -115,11 +97,10 @@ const MovieDescription = () => {
     }, [GET_MOVIE_DETAILS, GET_PERSON_DETAILS, whichData])
 
     const { loading, error, data} = useQuery(query, {variables:{idMovie:currentResultID, idPerson:currentPersonID},fetchPolicy: "cache-and-network" })
-    console.log(data)
 
     useEffect(() => {
         if(whichData === "Movie" && data) {
-            if(typeof data.Movie != 'undefined'){
+            try{
                 let currentMovie = data.Movie[0]
                 const results: Movie = {
                     title: currentMovie.title,
@@ -131,14 +112,14 @@ const MovieDescription = () => {
                     writers: currentMovie.writers.map((person: any) => <li key={getNewID()}>- {person.name}</li>),
                 }
                 setMovie(results)
-            }
+                
+            }catch(error){}
         }
     }, [data, whichData, currentResultID])
 
     useEffect(() => {
-        if(whichData === "Person" && data) {
-            console.log(data)
-            if(typeof data.Person != 'undefined'){
+        if(whichData === "Person") {
+            try{
                 let currentPerson = data.Person[0]
                 const results: Person = {
                     name: currentPerson.name,
@@ -149,11 +130,11 @@ const MovieDescription = () => {
                     wrote: currentPerson.wrote
                 }
                 setPerson(results)
-            }
+            }catch(error){}
         }
     }, [data, whichData, currentPersonID])
 
-    if(whichData === "Movie" && currentResultID !== "177"){
+    if(whichData === "Movie" && currentResultID !== "177" && movie){
         return (
             <div>
                 <div id="data_details">
@@ -165,7 +146,7 @@ const MovieDescription = () => {
                 </div>
             </div>
         );
-    }else if(whichData === "Person" && currentPersonID !== "172") {
+    }else if(whichData === "Person" && currentPersonID !== "172" && person) {
         return (
             <div>
                 <div id="data_details">
@@ -177,9 +158,10 @@ const MovieDescription = () => {
         )
 
     }
-    else {
-        return <div></div>
-    }
+    if (error) return <div><h1>Results:</h1><p>Login to see comments</p></div>
+    if (loading) return <div><h1>Results</h1><p>Fetching movies...</p></div>
+    return <div></div>
+    
 }
 
 

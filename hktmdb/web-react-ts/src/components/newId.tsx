@@ -1,8 +1,13 @@
 
 
 let id = 0
-const getNewID = () =>{
+export const getNewID = () =>{
+    console.log(id)
     return id++
 }
 
-export default getNewID
+export const getNewID2 = () =>{
+    var timestamp = Date.now(); 
+    return timestamp;
+}
+

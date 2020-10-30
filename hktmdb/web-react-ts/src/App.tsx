@@ -21,16 +21,16 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
 
-class App extends React.Component {
+const App = () => {
+  const { isAuthenticated } = useAuth0()
 
-  render() {
     return (
       <DataStoreProvider>
       <div id="grid-container">
         <img id="Header" src={require("./resources/hktMDB.svg")} />
         <div>
-          <Login/>
-          <LogOut/>
+          {!isAuthenticated && (<Login/>)}
+          {isAuthenticated && (<LogOut/>)}
         </div>
         <div id="Search">
           <Search/><br></br>
@@ -42,8 +42,7 @@ class App extends React.Component {
       </div>
       </DataStoreProvider>
     )
-  }
-
 }
+
 
 export default App;

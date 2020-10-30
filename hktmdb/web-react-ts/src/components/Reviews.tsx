@@ -4,10 +4,12 @@ import React, {useEffect, useState} from 'react';
 import { useDataStore } from "../context";
 import '../styling/search.css';
 import { useAuth0 } from "@auth0/auth0-react";
-import getNewID from "./newId"
+import {getNewID} from "./newId"
+import Login from "./Login"
 
 
 interface MovieReview {
+    id:Number
     header: String,
     review: String,
     score: number,
@@ -27,6 +29,7 @@ const Reviews = () => {
      query ($idMovie:ID!){
         Movie(_id: $idMovie){
             reviews{
+                id
                 header
                 review
                 score
@@ -37,9 +40,9 @@ const Reviews = () => {
 
     `;
     const DELETE_COMMENT = gql`
-        mutation ($header:String!){
-            DeleteMovieReview(header:$header){
-                header
+        mutation ($id:ID!){
+            DeleteMovieReview(id:$id){
+                id
             }
         }
     `;
@@ -53,18 +56,24 @@ const Reviews = () => {
         refetch()
     },[refreshFlag])
 
-    const test = (userId:String, header:String) => {
+    const test = (userId:String, id:Number) => {
         let currentUserId = localStorage.getItem("userID");
         if(userId===currentUserId){
             return (<button id="remove_button" onClick={(e) => {
-                deleteComment({variables:{header:header}})
-                store.addRefreshFlag(!store.refreshFlag)
+                deleteComment({variables:{id:id}})
+                let test = currentResultID
+                store.addCurrentResultId("177")
+                setTimeout(function(){store.addCurrentResultId(test)}, 500);
             }}>Remove</button>)
         }
         return(<div></div>)
     }
-    console.log(data)
-    if(isAuthenticated && data && typeof data.Movie[0].reviews != 'undefined'){
+    if(whichData !== "Movie"){return(<div></div>)}
+    if (!isAuthenticated) return <div><p>login to see comments:</p><Login/></div>
+    if (error) return <div><p>error</p></div>
+    if (loading) return <div><p>Fetching movies...</p></div>
+
+    try{
         return(
             <div>
                 <h2>Reviews:</h2>
@@ -75,19 +84,16 @@ const Reviews = () => {
                             <p>{review.review}</p>
                             <p> Score: {review.score}</p>
                             <div>
-                                {test(review.userId, review.header)}
+                                {test(review.userId, review.id)}
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
         )
-    }
+    }catch(error){}
     
-    
-    if (error) return <div><h1>Results:</h1><p>Login to see comments</p></div>
-    if (loading) return <div><h1>Results</h1><p>Fetching movies...</p></div>
-    return (<div><p>Login to see comments</p></div>)
+    return (<div><p>No comments yet</p></div>)
 }
 
 export default Reviews

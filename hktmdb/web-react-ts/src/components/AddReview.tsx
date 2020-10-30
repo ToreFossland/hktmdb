@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import { gql, useMutation} from '@apollo/client';
 import { useDataStore } from "../context";
 import { useObserver } from 'mobx-react-lite';
+import {getNewID2} from "./newId"
 
 
 const AddMovie = () => {
-    const [header, setHeader] = useState("");
+    const [header, setHeader] = useState("")
     const [reviewText, setReviewText] = useState("");
     const [score, setScore] = useState("");
     const userIdentity = localStorage.getItem("userID");
@@ -22,9 +23,10 @@ const AddMovie = () => {
     }
 
     const ADD_MOVIE_REVIEW = gql`
-        mutation getCreateMovieReview($header:String, $review:String, $score:Int, $userId:String) {
-           CreateMovieReview(header: $header, review: $review, score: $score, userId: $userId) {
+        mutation getCreateMovieReview($id:ID!, $header:String, $review:String, $score:Int, $userId:String) {
+           CreateMovieReview(id:$id, header: $header, review: $review, score: $score, userId: $userId) {
                 _id
+                id
                 header
                 review
                 score
@@ -34,9 +36,9 @@ const AddMovie = () => {
     `;
 
     const ADD_MOVIE_RELATION = gql`
-        mutation ($header:String!, $title:String!){
-            AddMovieReviews(from: {header: $header}, to: {title: $title}){
-                from{header}
+        mutation ($id:ID!, $title:String!){
+            AddMovieReviews(from: {id: $id}, to: {title: $title}){
+                from{id}
                 to{title}
             }
         }
@@ -50,12 +52,12 @@ const AddMovie = () => {
         e.preventDefault();
        if(whichData === "Movie"){
             console.log("riktig!")
-                let data = await addMovieReview({variables: {header: header, review: reviewText, score: toInt(score), userId: userIdentity }})
-                console.log(data)
-                console.log(currentResultTitle)
-                console.log(header)
-                await addRelation({variables:{header:header, title:currentResultTitle}})
-                store.addRefreshFlag(!store.refreshFlag)
+            let movieReviewId = getNewID2()
+            await addMovieReview({variables: {id: movieReviewId, header:header, review: reviewText, score: toInt(score), userId: userIdentity }})
+            console.log(currentResultTitle)
+            console.log(movieReviewId)
+            await addRelation({variables:{id:movieReviewId, title:currentResultTitle}})
+            store.addRefreshFlag(!store.refreshFlag)
         }
         else{
             console.log("dette er ikke lov")
