@@ -50,21 +50,16 @@ const AddMovie = () => {
 
     const submitReviewHandler = async (e:any) => {
         e.preventDefault();
-       if(whichData === "Movie"){
-            console.log("riktig!")
-            let movieReviewId = getNewID2()
-            await addMovieReview({variables: {id: movieReviewId, header:header, review: reviewText, score: toInt(score), userId: userIdentity }})
-            console.log(currentResultTitle)
-            console.log(movieReviewId)
-            await addRelation({variables:{id:movieReviewId, title:currentResultTitle}})
-            store.addRefreshFlag(!store.refreshFlag)
-        }
-        else{
-            console.log("dette er ikke lov")
-        }
-        return false;
+        console.log("riktig!")
+        let movieReviewId = getNewID2()
+        await addMovieReview({variables: {id: movieReviewId, header:header, review: reviewText, score: toInt(score), userId: userIdentity }})
+        console.log(currentResultTitle)
+        console.log(movieReviewId)
+        await addRelation({variables:{id:movieReviewId, title:currentResultTitle}})
+        store.addRefreshFlag(!store.refreshFlag)
     }
-    if (currentResultID != "177"){
+
+    if (currentResultID != "177" && whichData === "Movie"){
         return (
             <div> 
                 <div id="add_review">

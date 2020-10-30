@@ -32,13 +32,11 @@ const App = () => {
           {!isAuthenticated && (<Login/>)}
           {isAuthenticated && (<LogOut/>)}
         </div>
-        <div id="Search">
-          <Search/><br></br>
-          <SearchResults/>
-        </div>
+        <Search/>
+        <SearchResults/>
         <MovieDescription/>
         <Reviews/>
-        <AddReview/>
+        {isAuthenticated && (<AddReview/>)}
       </div>
       </DataStoreProvider>
     )

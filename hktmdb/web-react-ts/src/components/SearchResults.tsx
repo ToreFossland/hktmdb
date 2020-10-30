@@ -166,7 +166,7 @@ const SearchResults = () => {
 
 
     return (
-        <div>
+        <div id="SearchResults">
             <h1>Results</h1>
             <ul className="moviediv">{moviedivs} {persondivs}</ul>
             {moreResults(getDataElements().length)}
