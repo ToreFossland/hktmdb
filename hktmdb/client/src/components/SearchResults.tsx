@@ -171,13 +171,22 @@ const SearchResults = () => {
         }
     }
 
-
+    if(persondivs.length > 0 || moviedivs.length > 0) {
     return (
-        <div id="SearchResults">
+        <div>
             <ul className="moviediv">{moviedivs} {persondivs}</ul>
             {moreResults(getDataElements().length)}
         </div>
     );
+    }
+
+    else {
+        return (
+            <div>
+                <p>The results will be displayed here.</p>
+            </div>
+        )
+    }
 }
 
 

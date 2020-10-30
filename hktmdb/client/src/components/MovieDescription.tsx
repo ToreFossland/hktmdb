@@ -163,7 +163,7 @@ const MovieDescription = () => {
     }
     if (error) return <div><h1>Results:</h1><p>Login to see comments</p></div>
     if (loading) return <div><h1>Results</h1><p>Fetching movies...</p></div>
-    return <div></div>
+    return <div><p>Details about a movie or person will be displayed here.</p></div>
     
 }
 
