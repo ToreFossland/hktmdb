@@ -19,7 +19,7 @@ const SearchInput = () => {
             <form>
                 <div id="search_input">
                     <img style={{verticalAlign:-7, opacity: 0.8}}  src={require("../resources/search.svg")}/>
-                    <input style={{outline: "none", border: "none", width: 225, height:35, backgroundColor: "#ddd", fontSize: 20}} type="text" onChange={handleChange}/>
+                    <input type="text" onChange={handleChange}/>
                 </div>
             </form>
         </div>

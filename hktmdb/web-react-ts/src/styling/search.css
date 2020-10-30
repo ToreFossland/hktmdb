@@ -25,8 +25,9 @@ button:hover {
 }
 
 #search_input {
+    min-width: 200px;
     margin: auto;
-    width: 300px;
+    width: 20vw;
     height: 40px;
     border-radius: 35px;
     border: 1px solid #aaa;
@@ -37,8 +38,14 @@ button:hover {
     background-color: #ddd;
 }
 
-#search_input::placeholder {
-    color: #222;
+#search_input > input {
+    outline: none;
+    width: 80%;
+    border-radius: 25px;
+    background-color: #ddd;
+    border: none;
+    height: 90%;
+    font-size: 20px;
 }
 
 #search_input:focus {
