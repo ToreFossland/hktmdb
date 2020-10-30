@@ -94,7 +94,7 @@ const AddMovie = () => {
     }
 
     else {
-        return <div><p>You can add a review here.</p></div>
+        return <div><p>You can add a review to a movie here.</p></div>
     }
 }
 
