@@ -98,7 +98,7 @@ const Reviews = () => {
         )
     }catch(error){}
     
-    return (<div><p>No comments yet</p></div>)
+    return (<div><p>No reviews yet</p></div>)
 }
 
 export default Reviews
