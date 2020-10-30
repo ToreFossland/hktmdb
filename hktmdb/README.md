@@ -1,3 +1,12 @@
+# Hvordan starte opp prosjekt
+
+Gå inn i hktmdb > client og skriv `npm install`.
+
+Når alt er installert, gå inn i hktmdb > server og skriv `npm run start`.
+
+Gå så inn i hktmdb > client og skriv `npm run start`, her også.
+
+
 # **Prosjekt 3 - Dokumentasjon**
 
 
