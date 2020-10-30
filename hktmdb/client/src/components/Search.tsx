@@ -129,36 +129,45 @@ const SearchType = () => {
         </div>
     );
     }
+    
+
+
+const FilterButton = () => {
+    const [filterShow, setFilterShow] = useState("none");
+    const [img, setImg] = useState("more.svg")
+    const showFilterOptions = () => {
+        if(filterShow == "none") {
+            setFilterShow("block");
+            setImg("less.svg");
+        }
+        else {
+            setFilterShow("none");
+            setImg("more.svg");
+        }
+    }
+
+    return(
+        <div>
+            <button id="buttonShowFilter" onClick={() => showFilterOptions()}>Filter options:<img style={{verticalAlign:-7}} src={require("../resources/expand_"+img)}/></button>
+            <div style={{display: filterShow}} id="filter_container">
+                <SearchSort/>
+                <SearchYear/>
+            </div>
+        </div>
+    )
+}
 
 
 
 
 export default function Search() {
 
-    const [filterShow, setFilterShow] = useState("none");
-    const [img, setImg] = useState("more.svg")
-    const showFilterOptions = () => {
-        if(filterShow === "none") {
-            setFilterShow("block");
-            setImg("less.svg");
-        }
-
-        else {
-            setFilterShow("none");
-            setImg("more.svg");
-        }
-}
     return(
         <div>
             <div>
                 <SearchInput/>
                 <SearchType/>
-            </div>
-            
-            <button id="buttonShowFilter" onClick={() => showFilterOptions()}>Filter options:<img alt="pic" style={{verticalAlign:-7}} src={require("../resources/expand_"+img)}/></button>
-            <div style={{display: filterShow}} id="filter_container">
-                <SearchSort/>
-                <SearchYear/>
+                <FilterButton/>
             </div>
         </div>
     )
