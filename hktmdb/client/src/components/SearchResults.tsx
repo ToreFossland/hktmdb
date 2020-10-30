@@ -7,6 +7,7 @@ import '../styling/general.css';
 
 
 const SearchResults = () => {
+    //Variabler
     const [dataCount, setDataCount] = useState(5);
     const store = useDataStore();
     let searchInput = useObserver(() => (store.filterProps.get("searchInput")))
@@ -17,16 +18,18 @@ const SearchResults = () => {
     let whichData = useObserver(() => (store.filterProps.get("dataFilterType")))
 
 
+    //Resetter antall data hentet
     useEffect(() => {
         setDataCount(5)
     }, [searchInput, firstYear, secondYear, movieFilterType, whichData])
 
+    //Resetter til dummy elementer
     useEffect(() => {
         store.addCurrentPersonId("172");
         store.addCurrentResultId("177");
     }, [whichData, searchInput])
 
-
+    //Gjør om input til store bokstaver
     const capitalizeFirstLetters = (input: string) => {
         var splitStr = input.toLowerCase().split(' ');
         for (var i = 0; i < splitStr.length; i++) {
@@ -35,6 +38,7 @@ const SearchResults = () => {
         return splitStr.join(' '); 
     }
 
+    //Queries for movie og person
     const getQueries = function() {
         let GET_DATA;
 
@@ -69,7 +73,7 @@ const SearchResults = () => {
     
 
     
-
+    //Henter data basert på hvilken datatype, enten movie eller person
     const { loading, error, data, fetchMore } = useQuery(getQueries(), {
         variables: {
             offset: 0,
@@ -80,9 +84,10 @@ const SearchResults = () => {
         ,
         fetchPolicy: "cache-and-network"
     });
-    if (error) return <div><h1>Results:</h1><p>Error</p></div>
-    if (loading) return <div><h1>Results</h1><p>Fetching movies...</p></div>
+    if (error) return <div><p>Error</p></div>
+    if (loading) return <div><p>Fetching movies...</p></div>
 
+    //Mapper elementene funnet
     const getDataElements = function() {
         let dataElements;
         if(whichData === "Movie"){
@@ -96,7 +101,7 @@ const SearchResults = () => {
         return dataElements;
     }
     
-    
+    //Plasserer elementene i en liste, som så vises
     const moviedivs = [];
     if(whichData === "Movie") {
         for(var i=0; i < getDataElements().length; i++) {
@@ -110,7 +115,7 @@ const SearchResults = () => {
         }
     }
     
-
+    //Henter ID-en til elemententet man vil se detaljer om
     function showDataDetails(event: any) {
         if(whichData === "Movie"){
             store.addCurrentResultId(getDataElements()[event.target.value]._id)
@@ -120,6 +125,7 @@ const SearchResults = () => {
         }
     }
 
+    //Henter neste batch med data.
     const fetch = function(input: number){ 
         if(whichData === "Movie") {
             fetchMore({
@@ -156,6 +162,7 @@ const SearchResults = () => {
         }
     }
     
+    //Viser knapp for å hente mer data dersom det er mer
     var moreResults = function(input: number) {
         if(input === dataCount) {
 
@@ -167,7 +174,6 @@ const SearchResults = () => {
 
     return (
         <div id="SearchResults">
-            <h1>Results</h1>
             <ul className="moviediv">{moviedivs} {persondivs}</ul>
             {moreResults(getDataElements().length)}
         </div>

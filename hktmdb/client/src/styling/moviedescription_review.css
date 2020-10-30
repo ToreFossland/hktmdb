@@ -52,6 +52,10 @@
     white-space: initial;
 }
 
+.reviews >div> p {
+    font-size: 16px;
+}
+
 #remove_button {
     border-radius: 5px;
     border: 1px solid #aaa;

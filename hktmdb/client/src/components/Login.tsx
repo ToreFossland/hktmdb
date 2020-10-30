@@ -9,6 +9,7 @@ const { loginWithRedirect} = useAuth0();
 
   return (
       <div>
+            <p>You are not logged in.</p>
             <button onClick={() => loginWithRedirect()}>Log In</button>
       </div>
   );

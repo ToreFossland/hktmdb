@@ -3,6 +3,7 @@ import { useDataStore } from "../context";
 import '../styling/search.css';
 import '../styling/general.css';
 
+//Henter data fra tekstfelt
 const SearchInput = () => {
     const store = useDataStore();
 
@@ -25,7 +26,7 @@ const SearchInput = () => {
     );
 }
 
-
+//Setter verdier for hvilke år man skal søke mellom
 const SearchYear = () => {
     const store = useDataStore();
 
@@ -73,7 +74,7 @@ const SearchYear = () => {
 }
 
 
-
+//Sorterer etter tittel eller årstall
 const SearchSort = () => {
     const store = useDataStore();
 
@@ -100,6 +101,7 @@ const SearchSort = () => {
     );
 }
 
+//Setter hva man skal søke etter; movie eller person
 const SearchType = () => {
     const store = useDataStore();
 

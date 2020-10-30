@@ -21,7 +21,7 @@ const AddMovie = () => {
     const toInt = function(input: string) {
         return parseInt(input)
     }
-
+    //query for å legge til moviereview
     const ADD_MOVIE_REVIEW = gql`
         mutation getCreateMovieReview($id:ID!, $header:String, $review:String, $score:Int, $userId:String) {
            CreateMovieReview(id:$id, header: $header, review: $review, score: $score, userId: $userId) {
@@ -35,6 +35,7 @@ const AddMovie = () => {
         }
     `;
 
+    //query for relasjoner mellom movie og moviereviews
     const ADD_MOVIE_RELATION = gql`
         mutation ($id:ID!, $title:String!){
             AddMovieReviews(from: {id: $id}, to: {title: $title}){
@@ -44,6 +45,7 @@ const AddMovie = () => {
         }
     `;
 
+    //setter score mellom 0 og 10
     const handleScore = (input:string) => {
         if(parseInt(input) > 10) {
             setScore("10");

@@ -24,7 +24,7 @@ const Reviews = () => {
     let currentResultID = useObserver(() => store.currentResultId);
     let refreshFlag = useObserver(() => store.refreshFlag);
 
-
+    //Henter reviews tilknyttet den valge filmen
     const GET_RELATED_REVIEWS = gql`
      query ($idMovie:ID!){
         Movie(_id: $idMovie){
@@ -39,6 +39,8 @@ const Reviews = () => {
         }
 
     `;
+
+    //Mutation for å slette et review
     const DELETE_COMMENT = gql`
         mutation ($id:ID!){
             DeleteMovieReview(id:$id){
@@ -56,6 +58,7 @@ const Reviews = () => {
         refetch()
     },[refreshFlag])
 
+    //Returnerer alle reviewsene tilknyttet filmen
     const test = (userId:String, id:Number) => {
         let currentUserId = localStorage.getItem("userID");
         if(userId===currentUserId){

@@ -10,6 +10,7 @@ import { DataStoreProvider } from './context'
 import './styling/general.css';
 import './styling/searchresults.css';
 import './styling/search.css';
+import './styling/loginout.css';
 import './styling/moviedescription_review.css';
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -24,7 +25,7 @@ const App = () => {
       <DataStoreProvider>
       <div id="grid-container">
         <img alt="pic" id="Header" src={require("./resources/hktMDB.svg")} />
-        <div>
+        <div id="user_bar">
           {!isAuthenticated && (<Login/>)}
           {isAuthenticated && (<LogOut/>)}
         </div>

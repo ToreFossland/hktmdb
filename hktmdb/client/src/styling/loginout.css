@@ -1,0 +1,18 @@
+#user_bar {
+    background-color: #333;
+    color: #ddd;
+}
+
+#user_bar > div {
+    display: flex;
+    justify-content: space-around;
+}
+
+#user_bar > div > button {
+    background-color: #555;
+    border: 1px solid #222;
+    border-radius: 10px;
+    color: #bbb;
+    padding: 10px;
+    outline: none;
+}

@@ -98,6 +98,8 @@ const MovieDescription = () => {
 
     const { loading, error, data} = useQuery(query, {variables:{idMovie:currentResultID, idPerson:currentPersonID},fetchPolicy: "cache-and-network" })
 
+
+    //Henter detaljer for movie
     useEffect(() => {
         if(whichData === "Movie" && data) {
             try{
@@ -117,6 +119,7 @@ const MovieDescription = () => {
         }
     }, [data, whichData, currentResultID])
 
+    //Henter detaljer for person
     useEffect(() => {
         if(whichData === "Person") {
             try{
