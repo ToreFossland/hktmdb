@@ -6,6 +6,7 @@ Når alt er installert, åpne et terminalvindu i "server"-mappen og skriv `npm r
 
 Åpne så enda et terminalvindu (uten å lukke det forrige) i "client"-mappen og skriv `npm run start`, her også.
 
+NB! Husk å logge inn på VPN dersom du ikke bruker skolenettet.
 
 # Hvordan kjøre tester
 Åpne terminalvindu, gå inn i "client"-mappen og skriv `npm run cypress:open`. for e2e testing.
