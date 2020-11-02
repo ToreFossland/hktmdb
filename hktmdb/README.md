@@ -6,10 +6,10 @@ Når alt er installert, åpne et terminalvindu i "server"-mappen og skriv `npm r
 
 Åpne så enda et terminalvindu (uten å lukke det forrige) i "client"-mappen og skriv `npm run start`, her også.
 
-Dersom noe skulle kræsje ved oppstart:
-    1: Skriv i terminalvinduet som har kræsjet: "lsof -i tcp:4001" (server) eller "lsof -i tcp:3000" (client)
-    2: Skriv deretter: "kill -9 <PID>". (<PID> er koden du må skrive inn for å stoppe en eventuell prosess som hindrer oppstart.)
-    3: Prøv deretter å kjøre "npm run start" på nytt.
+Dersom noe skulle kræsje ved oppstart (dette kan skje dersom du allerede har noe kjørende på port 4001/3000):
+* 1: Skriv i terminalvinduet som har kræsjet: "lsof -i tcp:4001" (server) eller "lsof -i tcp:3000" (client)
+* 2: Skriv deretter: "kill -9 <PID>". (<PID> er koden du må skrive inn for å stoppe en eventuell prosess som hindrer oppstart.)
+* 3: Prøv deretter å kjøre "npm run start" på nytt.
 
 NB! Husk å logge inn på VPN dersom du ikke bruker skolenettet.
 
