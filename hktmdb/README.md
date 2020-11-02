@@ -1,16 +1,16 @@
 # Hvordan starte opp prosjekt
 
-Åpne terminalvindu, gå inn i hktmdb > client og skriv `npm install`.
+Åpne terminalvindu, cd deg inn i "client"-mappen og skriv `npm install`.
 
-Når alt er installert, åpne et terminalvindu i hktmdb > server og skriv `npm run start`.
+Når alt er installert, åpne et terminalvindu i "server"-mappen og skriv `npm run start`.
 
-Åpne så enda et terminalvindu (uten å lukke det forrige) i hktmdb > client og skriv `npm run start`, her også.
+Åpne så enda et terminalvindu (uten å lukke det forrige) i "client"-mappen og skriv `npm run start`, her også.
 
 
 # Hvordan kjøre tester
-Åpne terminalvindu, gå inn i hktmdb > client og skriv `npm run cypress:open`. for e2e testing.
+Åpne terminalvindu, gå inn i "client"-mappen og skriv `npm run cypress:open`. for e2e testing.
 
-Åpne terminalvindu, gå inn i hktmdb > client og skriv `npm run test`. for unit testing.
+Åpne terminalvindu, gå inn i "client"-mappen og skriv `npm run test`. for unit testing.
 
 
 # **Prosjekt 3 - Dokumentasjon**
